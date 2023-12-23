@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRMS - Student Result Management System</title>
+    <link rel="icon/image" href="src/SRMS-icon.webp">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div class="fixed bg-gradient-to-tr from-blue-400 to-[#5900ff] h-full w-screen">
+        <div class="absolute h-[20rem] md:h-[25rem] lg:h-[30rem] w-[20rem] md:w-[25rem] lg:w-[30rem] bg-gradient-to-br shadow-xl from-blue-400 to-[blue] rounded-full -top-28 -left-28 sm:-top-20 sm:-left-20 md:-top-32 md:-left-32 lg:-top-[20%] lg:-left-[10%]"></div>
+        <div class="absolute h-[30rem] sm:h-[35rem] md:h-[45rem] lg:h-[50rem] w-[30rem] sm:w-[35rem] md:w-[45rem] lg:w-[50rem] bg-gradient-to-tl shadow-2xl from-[#4444ff] to-[#380499] rounded-full -bottom-[15%] -right-[30%] sm:-right-[20%] md:-bottom-[50%] md:-right-[30%] lg:-bottom-[40%] lg:-right-[20%]"></div>
+        <div class="flex items-center justify-center flex-col p-8 pt-5 w-[80vw] sm:w-96 h-max bg-white shadow-2xl text-black mx-auto my-20 rounded" style="backdrop-filter: blur(8px);">
+            <div>
+                <img src="src/SRMS-icon.webp" class="h-20 w-20 mb-5 rounded-full" alt="icon">
+            </div>
+            <div class="w-full">
+                <div class="my-5">
+                    <h1 class="font-bold text-3xl">Welcome to SRMS!</h1>
+                    <p class="text-[gray] text-[0.9rem]">Register your account</p>
+                </div>
+                <div>
+                    <div class="flex flex-col my-2">
+                        <label for="name">Name <span class="text-[gray]">(Ftrstname+Surname)</span></label>
+                        <input type="text" name="" id="name" placeholder="Your name (Eg: Virat Kohli)" class="text-[gray] px-3 py-1 border rounded outline-blue-800" style="border: 1px solid rgb(179, 176, 176);">
+                    </div>
+                    <div class="flex flex-col my-2">
+                        <label for="email">Email</label>
+                        <input type="email" name="" id="email" placeholder="abc@gmail.com" class="text-[gray] px-3 py-1 border rounded outline-blue-800" style="border: 1px solid rgb(179, 176, 176);">
+                    </div>
+                    <div class="flex flex-col my-2">
+                        <label for="password">Password</label>
+                        <input type="password" name="" id="password" placeholder="Your password" class="text-[gray] px-3 py-1 border rounded outline-blue-800" style="border: 1px solid rgb(179, 176, 176);">
+                    </div>
+                </div>
+                <div class="flex items-center justify-end text-sm text-[gray]">
+                    <p>Already have an account? <a class="rounded-full px-4 py-1 ml-3 text-[0.65rem] hover:cursor-pointer" style="border:1.4px solid rgb(179, 176, 176);">SIGN IN</a> </p>
+                </div>
+                <div class="mt-7">
+                    <a href="" class="bg-[#0000ff] hover:bg-[#3434ff] text-yellow-300 rounded-full text-sm font-semibold px-10 py-2 transition-all duration-200 hover:cursor-pointer" style="box-shadow: rgba(1, 1, 48, 0.685) 0px 1px 5px 1px;">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
