@@ -6,6 +6,7 @@
     <title>SRMS - Student Result Management System</title>
     <link rel="icon/image" href="src/SRMS-icon.webp">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
 </head>
 <body class="bg-black">
     <div class="overflow-hidden flex items-center justify-start flex-col p-5 sm:p-8 pt-5 w-[85vw] sm:w-[25rem] h-[32.5rem] bg-white shadow-2xl text-black mx-auto my-14 rounded" style="backdrop-filter: blur(8px);">
@@ -16,7 +17,7 @@
             <h1 class="font-bold text-[1.3rem] sm:text-3xl">Welcome to SRMS!</h1>
         </div>
         <div class="relative w-full">
-            <form class="w-full absolute right-[0%] transition-all duration-300" id="Login">
+            <div class="w-full absolute right-[0%] transition-all duration-300" id="Login">
                 <div>
                     <div class="flex flex-col my-2">
                         <label for="name" class="text-sm sm:text-base">Name <span class="text-[gray]">(Firstname+Surname)</span></label>
@@ -32,42 +33,43 @@
                     </div>
                 </div>
                 <div class="flex items-center justify-end text-[0.8rem] sm:text-sm text-[gray]">
-                    <p>Didn't have an account? <a class="text-[blue] text-[0.65rem] hover:cursor-pointer" id="Signup_btn">SIGN UP</a> </p>
+                    <p>Didn't have an account? <a class="text-[blue] text-[0.65rem] hover:cursor-pointer" id="tosignuppage">SIGN UP</a> </p>
                 </div>
                 <div class="mt-7">
-                    <a href="" class="scale-90 sm:scale-100 bg-[#0000ff] hover:bg-[#3434ff] text-yellow-300 rounded-full text-sm font-bold px-10 py-2 transition-all duration-200 hover:cursor-pointer" style="box-shadow: rgba(1, 1, 48, 0.685) 0px 1px 5px 1px;">Login</a>
+                    <a href="" class="scale-90 sm:scale-100 bg-[#0000ff] hover:bg-[#3434ff] text-yellow-300 rounded-full text-sm font-bold px-10 py-2 transition-all duration-200 hover:cursor-pointer" id="login" style="box-shadow: rgba(1, 1, 48, 0.685) 0px 1px 5px 1px;">Login</a>
                 </div>
-            </form>
+            </div>
             <form class="w-full absolute left-[130%] transition-all duration-300" id="Signup">
                 <div>
                     <div class="flex flex-col my-2">
                         <label for="name" class="text-sm sm:text-base">Name <span class="text-[gray]">(Firstname+Surname)</span></label>
-                        <input type="text" name="" id="sname" placeholder="Your name (Eg: Virat Kohli)" class="text-sm sm:text-base text-[gray] px-2 py-0.5 sm:px-3 sm:py-1 border rounded outline-blue-800" style="border: 1px solid rgb(179, 176, 176);">
+                        <input type="text" name="" id="sname" placeholder="Your name (Eg: Virat Kohli)" required class="text-sm sm:text-base text-[gray] px-2 py-0.5 sm:px-3 sm:py-1 border rounded outline-blue-800" style="border: 1px solid rgb(179, 176, 176);">
                     </div>
                     <div class="flex flex-col my-2">
                         <label for="email" class="text-sm sm:text-base">Email</label>
-                        <input type="email" name="" id="semail" placeholder="abc@gmail.com" class="text-[gray] px-2 py-0.5 sm:px-3 sm:py-1 border rounded outline-blue-800" style="border: 1px solid rgb(179, 176, 176);">
+                        <input type="email" name="" id="semail" placeholder="abc@gmail.com" required class="text-[gray] px-2 py-0.5 sm:px-3 sm:py-1 border rounded outline-blue-800" style="border: 1px solid rgb(179, 176, 176);">
                     </div>
                     <div class="flex flex-col my-2">
                         <label for="password" class="text-sm sm:text-base">Password</label>
-                        <input type="password" name="" id="spassword" placeholder="Your password" class="text-sm sm:text-base text-[gray] px-2 py-0.5 sm:px-3 sm:py-1 border rounded outline-blue-800" style="border: 1px solid rgb(179, 176, 176);">
+                        <input type="password" name="" id="spassword" placeholder="Your password" required class="text-sm sm:text-base text-[gray] px-2 py-0.5 sm:px-3 sm:py-1 border rounded outline-blue-800" style="border: 1px solid rgb(179, 176, 176);">
                     </div>
                     <div>
-                        <input type="radio" name="gender" id="male" value="male">
+                        <input type="radio" name="gender" id="male" value="male" required>
                         <label for="male" class="mr-3">Male</label>
-                        <input type="radio" name="gender" id="female" value="female">
+                        <input type="radio" name="gender" id="female" value="female" required>
                         <label for="female">Female</label>
                     </div>
                 </div>
                 <div class="flex items-center justify-end text-[0.8rem] sm:text-sm text-[gray]">
-                    <p>Already have an account? <a class="text-[blue] text-[0.65rem] hover:cursor-pointer" id="Login_btn">LOGIN</a> </p>
+                    <p>Already have an account? <a class="text-[blue] text-[0.65rem] hover:cursor-pointer" id="tologinpage">LOGIN</a> </p>
                 </div>
                 <div class="mt-7">
-                    <a href="" class="scale-90 sm:scale-100 bg-[#0000ff] hover:bg-[#3434ff] text-yellow-300 rounded-full text-sm font-bold px-10 py-2 transition-all duration-200 hover:cursor-pointer" style="box-shadow: rgba(1, 1, 48, 0.685) 0px 1px 5px 1px;">Sign Up</a>
+                    <button class="scale-90 sm:scale-100 bg-[#0000ff] hover:bg-[#3434ff] text-yellow-300 rounded-full text-sm font-bold px-10 py-2 transition-all duration-200 hover:cursor-pointer" id="signup" style="box-shadow: rgba(1, 1, 48, 0.685) 0px 1px 5px 1px;">Sign Up</button>
                 </div>
             </form>
         </div>
     </div>
 </body>
 <script src="script.js"></script>
+<script src="signup.js"></script>
 </html>

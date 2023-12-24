@@ -1,7 +1,7 @@
 var login_page=document.getElementById("Login");
 var signup_page=document.getElementById("Signup");
-var signup_btn=document.getElementById("Signup_btn");
-var login_btn=document.getElementById("Login_btn");
+var signup_btn=document.getElementById("tosignuppage");
+var login_btn=document.getElementById("tologinpage");
 
 // console.log(login_page,signup_page);
 signup_btn.addEventListener('click',()=>
