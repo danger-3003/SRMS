@@ -1,5 +1,4 @@
 var signup = document.getElementById("signup");
-var login = document.getElementById("login");
 
 //creating firebase config, directly copying and pasting from firebase console...
 const firebaseConfig = {
@@ -37,5 +36,6 @@ document.getElementById("Signup").addEventListener('submit',(e)=>
         gender:gender,
         });
     //resetting the form after submitting
+    swal("Registered successfully...","","success");
     document.getElementById("Signup").reset();  
 })

@@ -7,6 +7,7 @@
     <link rel="icon/image" href="src/SRMS-icon.webp">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <body style="background-image: url(src/Untitled.svg);">
     <div class="overflow-hidden flex items-center justify-start flex-col p-5 sm:p-8 pt-5 w-[85vw] sm:w-[25rem] h-[29rem] sm:h-[32.2rem] md:h-[32.5rem] bg-white shadow-2xl text-black mx-auto my-14 rounded-md" style="backdrop-filter: blur(8px);">
@@ -17,7 +18,7 @@
             <h1 class="font-bold text-[1.3rem] sm:text-3xl">Welcome to SRMS!</h1>
         </div>
         <div class="relative w-full">
-            <div class="w-full absolute right-[0%] transition-all duration-300" id="Login">
+            <form class="w-full absolute right-[0%] transition-all duration-300" id="Login">
                 <div>
                     <div class="flex flex-col my-2">
                         <label for="name" class="text-sm sm:text-base">Name <span class="text-[gray]">(Firstname+Surname)</span></label>
@@ -36,9 +37,9 @@
                     <p>Didn't have an account? <a class="text-[blue] text-[0.65rem] hover:cursor-pointer" id="tosignuppage">SIGN UP</a> </p>
                 </div>
                 <div class="mt-7">
-                    <a href="" class="scale-90 sm:scale-100 bg-[#0000ff] hover:bg-[#3434ff] text-yellow-300 rounded-full text-sm font-bold px-10 py-2 transition-all duration-200 hover:cursor-pointer" id="login" style="box-shadow: rgba(1, 1, 48, 0.685) 0px 1px 5px 1px;">Login</a>
+                    <button class="scale-90 sm:scale-100 bg-[#0000ff] hover:bg-[#3434ff] text-yellow-300 rounded-full text-sm font-bold px-10 py-2 transition-all duration-200 hover:cursor-pointer" id="login" style="box-shadow: rgba(1, 1, 48, 0.685) 0px 1px 5px 1px;">Login</button>
                 </div>
-            </div>
+            </form>
             <form class="w-full absolute left-[130%] transition-all duration-300" id="Signup">
                 <div>
                     <div class="flex flex-col my-2">
@@ -72,4 +73,5 @@
 </body>
 <script src="script.js"></script>
 <script src="signup.js"></script>
+<script src="user/login.js"></script>
 </html>
