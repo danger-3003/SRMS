@@ -1,14 +1,15 @@
 var signup = document.getElementById("signup");
-
+var login_btn=document.getElementById("login");
+var login=document.getElementById("Login");
 //creating firebase config, directly copying and pasting from firebase console...
 const firebaseConfig = {
-    apiKey: "AIzaSyCkgB174sESX-kReucJ7G8EJ1JMRJuQogA",
-    authDomain: "srms-1a443.firebaseapp.com",
-    databaseURL: "https://srms-1a443-default-rtdb.firebaseio.com",
-    projectId: "srms-1a443",
-    storageBucket: "srms-1a443.appspot.com",
-    messagingSenderId: "744824111665",
-    appId: "1:744824111665:web:85c84633cb353b828b8b10"
+    apiKey: "AIzaSyASRp-8cRSseFNCF63U4o3nppHt0Os3t-8",
+    authDomain: "srms-23af5.firebaseapp.com",
+    databaseURL: "https://srms-23af5-default-rtdb.firebaseio.com",
+    projectId: "srms-23af5",
+    storageBucket: "srms-23af5.appspot.com",
+    messagingSenderId: "775871377100",
+    appId: "1:775871377100:web:bb972cce7ee03b45ffdc69"
   };
 
 //initializing firebase database
@@ -26,7 +27,7 @@ document.getElementById("Signup").addEventListener('submit',(e)=>
     //accessing value from radio buttons
     var gender=document.querySelector('input[name="gender"]:checked').value;
     //creating reference for the person details
-    var details = firebase.database().ref(name);
+    var details = firebase.database().ref("Info").child(name);
     //passing values to database
     details.set(
         {
@@ -38,4 +39,22 @@ document.getElementById("Signup").addEventListener('submit',(e)=>
     //resetting the form after submitting
     swal("Registered successfully...","","success");
     document.getElementById("Signup").reset();  
+})
+
+login.addEventListener("submit",(e)=>
+{
+    e.preventDefault();
+    var name=document.getElementById("lname").value;
+    var pass=document.getElementById("lpassword").value;
+    //creating reference for data inside "Info" object
+    var ref=firebase.database().ref("Info/"+name);
+    ref.on("value",function(data)
+    {
+        //accessing values inside "Info/<name>" object
+        var Info=data.val();
+        if(Info.name===name & Info.password===pass)
+        {
+            window.location.assign("user/index.html","_blank");
+        }
+    })
 })
