@@ -37,15 +37,29 @@ document.getElementById("Signup").addEventListener('submit',(e)=>
         gender:gender,
         });
     //resetting the form after submitting
-    swal("Registered successfully...","","success");
+    var ref=firebase.database().ref("Info/"+name);
+    ref.on("value",function(data)
+    {
+        //accessing values inside "Info/<name>" object
+        var Info=data.val();
+        if(Info.name===name & Info.password===pass)
+        {
+            swal("Already registered...","","error");
+        }
+        else
+        {
+            swal("Registered successfully...","","success");
+        }
+    })
     document.getElementById("Signup").reset();  
 })
-
+//function to check if user is already logged in or not
 login.addEventListener("submit",(e)=>
 {
     e.preventDefault();
     var name=document.getElementById("lname").value;
     var pass=document.getElementById("lpassword").value;
+    user=name;
     //creating reference for data inside "Info" object
     var ref=firebase.database().ref("Info/"+name);
     ref.on("value",function(data)
@@ -54,7 +68,12 @@ login.addEventListener("submit",(e)=>
         var Info=data.val();
         if(Info.name===name & Info.password===pass)
         {
-            window.location.assign("user/index.html","_blank");
+            swal("Login successfully...","","success");
+            // window.location.assign("user/index.html","_blank");
+        }
+        else
+        {
+            swal("Register to login...","","error");
         }
     })
 })
