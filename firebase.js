@@ -28,7 +28,19 @@ document.getElementById("Signup").addEventListener('submit',(e)=>
     var gender=document.querySelector('input[name="gender"]:checked').value;
     //creating reference for the person details
     var details = firebase.database().ref("Info").child(name);
-    //passing values to database
+    //resetting the form after submitting
+    var ref=firebase.database().ref("Info/"+name);
+    ref.on("value",function(data)
+    {
+        //accessing values inside "Info/<name>" object
+        var Info=data.val();
+        if(Info.name===name & Info.password===pass & Info.email===email)
+        {
+            swal("Already registered...","","error");
+        }
+        else
+        {
+ //passing values to database
     details.set(
         {
         name: name,
@@ -36,18 +48,6 @@ document.getElementById("Signup").addEventListener('submit',(e)=>
         password: pass,
         gender:gender,
         });
-    //resetting the form after submitting
-    var ref=firebase.database().ref("Info/"+name);
-    ref.on("value",function(data)
-    {
-        //accessing values inside "Info/<name>" object
-        var Info=data.val();
-        if(Info.name===name & Info.password===pass)
-        {
-            swal("Already registered...","","error");
-        }
-        else
-        {
             swal("Registered successfully...","","success");
         }
     })
