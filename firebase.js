@@ -37,7 +37,7 @@ signup.addEventListener('submit',(e)=>
         if(keys.includes(name))
         {
             swal("User already registered...","","error");
-            document.getElementById("Signup").reset();
+            signup.reset();
         }
         else
         {
@@ -50,7 +50,7 @@ signup.addEventListener('submit',(e)=>
                 });
             //resetting the form after submitting
             swal("Registered successfully...","","success");
-            document.getElementById("Signup").reset();
+            signup.reset();
         } 
     })
 })
@@ -79,10 +79,12 @@ login.addEventListener("submit",(e)=>
                 localStorage.setItem('user-name',name);
                 localStorage.setItem('user-email',email);
                 window.location.assign("user/");
+                login.reset();
             }
             else
             {
                 swal("Invalid credetials","","error");
+                login.reset();
             }
         }
     })
