@@ -1,6 +1,5 @@
-var signup = document.getElementById("signup");
-var login_btn=document.getElementById("login");
 var login=document.getElementById("Login");
+var signup=document.getElementById("Signup");
 //creating firebase config, directly copying and pasting from firebase console...
 const firebaseConfig = {
     apiKey: "AIzaSyASRp-8cRSseFNCF63U4o3nppHt0Os3t-8",
@@ -16,7 +15,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 // adding evenlistner on cicking signup button
-document.getElementById("Signup").addEventListener('submit',(e)=>
+signup.addEventListener('submit',(e)=>
 {
     //removing default action of form - auto reloading
     e.preventDefault();
@@ -28,30 +27,32 @@ document.getElementById("Signup").addEventListener('submit',(e)=>
     var gender=document.querySelector('input[name="gender"]:checked').value;
     //creating reference for the person details
     var details = firebase.database().ref("Info").child(name);
-    //resetting the form after submitting
-    var ref=firebase.database().ref("Info/"+name);
+    //passing values to database 
+    var ref=firebase.database().ref("Info");
     ref.on("value",function(data)
     {
         //accessing values inside "Info/<name>" object
         var Info=data.val();
-        if(Info.name===name & Info.password===pass & Info.email===email)
+        var keys=Object.keys(Info);
+        if(keys.includes(name))
         {
-            swal("Already registered...","","error");
+            swal("User already registered...","","error");
+            document.getElementById("Signup").reset();
         }
         else
         {
- //passing values to database
-    details.set(
-        {
-        name: name,
-        email: email,
-        password: pass,
-        gender:gender,
-        });
+            details.set(
+                {
+                name: name,
+                email: email,
+                password: pass,
+                gender:gender,
+                });
+            //resetting the form after submitting
             swal("Registered successfully...","","success");
-        }
+            document.getElementById("Signup").reset();
+        } 
     })
-    document.getElementById("Signup").reset();  
 })
 //function to check if user is already logged in or not
 login.addEventListener("submit",(e)=>
@@ -60,24 +61,29 @@ login.addEventListener("submit",(e)=>
     var name=document.getElementById("lname").value;
     var pass=document.getElementById("lpassword").value;
     var email=document.getElementById("lemail").value;
-    user=name;
     //creating reference for data inside "Info" object
-    var ref=firebase.database().ref("Info/"+name);
+    var ref=firebase.database().ref("Info");
     ref.on("value",function(data)
     {
         //accessing values inside "Info/<name>" object
         var Info=data.val();
-        var name=Info.name;
-        if(Info.name===name & Info.password===pass)
+        var keys=Object.keys(Info);
+        for(var i=0;i<keys.length;i++)
         {
-            swal("Login successfully...","","success");
-            window.location.assign("user/index.html","_blank");
-            localStorage.setItem('user-name',name);
-            localStorage.setItem('user-email',email);
-        }
-        else
-        {
-            swal("Register to login...","","error");
+            var k = keys[i];
+            var user_name=Info[k].name;
+            var user_pass=Info[k].password;
+            if(user_name===name & user_pass===pass)
+            {
+                swal("Login success...","","success");
+                localStorage.setItem('user-name',name);
+                localStorage.setItem('user-email',email);
+                window.location.assign("user/");
+            }
+            else
+            {
+                swal("Invalid credetials","","error");
+            }
         }
     })
 })
