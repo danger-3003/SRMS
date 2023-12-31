@@ -59,6 +59,7 @@ login.addEventListener("submit",(e)=>
     e.preventDefault();
     var name=document.getElementById("lname").value;
     var pass=document.getElementById("lpassword").value;
+    var email=document.getElementById("lemail").value;
     user=name;
     //creating reference for data inside "Info" object
     var ref=firebase.database().ref("Info/"+name);
@@ -69,7 +70,9 @@ login.addEventListener("submit",(e)=>
         if(Info.name===name & Info.password===pass)
         {
             swal("Login successfully...","","success");
-            // window.location.assign("user/index.html","_blank");
+            window.location.assign("user/index.html","_blank");
+            localStorage.setItem('user-name',name);
+            localStorage.setItem('user-email',email);
         }
         else
         {
