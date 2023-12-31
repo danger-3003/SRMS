@@ -67,6 +67,7 @@ login.addEventListener("submit",(e)=>
     {
         //accessing values inside "Info/<name>" object
         var Info=data.val();
+        var name=Info.name;
         if(Info.name===name & Info.password===pass)
         {
             swal("Login successfully...","","success");
