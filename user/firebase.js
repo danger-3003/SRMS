@@ -18,12 +18,11 @@ document.getElementById('submit').addEventListener('submit',(e)=>
 {
     e.preventDefault();
     var numb_subj=getvalue("no_subj");
-    var i=1;
     var sem=getvalue("semister");
     var marks=firebase.database().ref("Marks").child(name+"/"+sem);
     //passing semister value into database
     marks.set({semister:sem});
-    for(;i<Number(numb_subj)+1;i++)
+    for(var i=1;i<Number(numb_subj)+1;i++)
     {
         //changing id name through loop, subject1, subject2, subject3.....
         var subject="subject"+i;
@@ -49,10 +48,7 @@ function getvalue(id)
 }
 
 var input_fields=document.getElementById("input_fields");//geting main div in which input fields to be added
-var addsubs=document.getElementById("add");
-
-//creating input fields according to number of subjects
-addsubs.addEventListener('click',addfield);
+document.getElementById("add").addEventListener('click',addfield);
 
 //creating function for adding the input fields on button click
 function addfield()
@@ -66,9 +62,25 @@ function addfield()
         var grade="grade"+i;
         var credit="credits"+i;
 
+        //the architecture must be like
+        // <div>
+        //     <input type="text"/>  for subject name
+        //     <select name="grade">  for grades
+        //         <option value="10">A+</option>
+        //         <option value="9">A</option>
+        //         <option value="8">B</option>
+        //         .
+        //         .
+        //         .
+        //         .
+        //     </select>
+        //     <input type="text"/>  for credits
+        // </div>
+
         const sub_name=document.createElement('input');
         sub_name.type='text';
         sub_name.id=subject;
+        sub_name.placeholder="subject name";
 
         const grade_field=document.createElement('select');
         grade_field.name='grade';
@@ -77,6 +89,7 @@ function addfield()
         const credit_field=document.createElement('input');
         credit_field.type='text';
         credit_field.id=credit;
+        credit_field.placeholder="number of credits";
 
         const div=document.createElement('div');
 
@@ -120,5 +133,6 @@ function addfield()
         div.appendChild(credit_field);
         input_fields.appendChild(div);
     }
+    //increasing i value for next subject until i value equals to number of subjects
     i++;
 }
