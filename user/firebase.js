@@ -10,33 +10,115 @@ const firebaseConfig = {
 
 //initializing firebase database
 firebase.initializeApp(firebaseConfig);
-
+//getting name from the h1 tag, later to be grab from local storage...
 var name=document.getElementById('name').innerText;
 
-document.getElementById('submit').addEventListener('submit',setdata);
-function setdata(e)
+//adding event listeners to the form
+document.getElementById('submit').addEventListener('submit',(e)=>
 {
     e.preventDefault();
+    var numb_subj=getvalue("no_subj");
+    var i=1;
     var sem=getvalue("semister");
     var marks=firebase.database().ref("Marks").child(name+"/"+sem);
-    const records=[];
-    for(var i=1;i<4;i++)
+    //passing semister value into database
+    marks.set({semister:sem});
+    for(;i<Number(numb_subj)+1;i++)
     {
+        //changing id name through loop, subject1, subject2, subject3.....
         var subject="subject"+i;
         var grade="grade"+i;
         var credit="credits"+i;
-        // console.log(subject,grade,credit);
+        //paassing id names for getting value
         var sub=getvalue(subject);
         var g=getvalue(grade);
         var c=getvalue(credit);
-        records.push({subject:sub,grade:g,credits:c});
+        //creating an object to store values dynamically
+        const obj={[subject]:sub,[credit]:c,[grade]:g};
+        //passing the object into the database
+        marks.update({[subject]:obj});
     }
-    marks.set({semister:sem,subject1:records[0],subject2:records[1],subject3:records[2],subject4:null});
     window.alert("submited");
-    // document.getElementById('submit').reset();
-}
+    document.getElementById('submit').reset();
+});
 
+//created function for getting elements from input fields
 function getvalue(id)
 {
     return document.getElementById(id).value;
+}
+
+var input_fields=document.getElementById("input_fields");//geting main div in which input fields to be added
+var addsubs=document.getElementById("add");
+
+//creating input fields according to number of subjects
+addsubs.addEventListener('click',addfield);
+
+//creating function for adding the input fields on button click
+function addfield()
+{
+    var numb_subj=getvalue("no_subj");
+    var i=1;
+    for(;i<Number(numb_subj)+1;i++)
+    {
+        //changing id name through loop, subject1, subject2, subject3.....
+        var subject="subject"+i;
+        var grade="grade"+i;
+        var credit="credits"+i;
+
+        const sub_name=document.createElement('input');
+        sub_name.type='text';
+        sub_name.id=subject;
+
+        const grade_field=document.createElement('select');
+        grade_field.name='grade';
+        grade_field.id=grade;
+
+        const credit_field=document.createElement('input');
+        credit_field.type='text';
+        credit_field.id=credit;
+
+        const div=document.createElement('div');
+
+        var opt1 = document.createElement('option');
+        opt1.value = 10;
+        opt1.text = 'A+';
+        grade_field.appendChild(opt1);
+
+        var opt2 = document.createElement('option');
+        opt2.value = 9;
+        opt2.text = 'A';
+        grade_field.appendChild(opt2);
+
+        var opt3 = document.createElement('option');
+        opt3.value = 8;
+        opt3.text = 'B';
+        grade_field.appendChild(opt3);
+
+        var opt4 = document.createElement('option');
+        opt4.value = 7;
+        opt4.text = 'C';
+        grade_field.appendChild(opt4);
+
+        var opt5 = document.createElement('option');
+        opt5.value = 6;
+        opt5.text = 'D';
+        grade_field.appendChild(opt5);
+
+        var opt6 = document.createElement('option');
+        opt6.value = 5;
+        opt6.text = 'E';
+        grade_field.appendChild(opt6);
+
+        var opt7 = document.createElement('option');
+        opt7.value = 4;
+        opt7.text = 'F';
+        grade_field.appendChild(opt7);
+
+        div.appendChild(sub_name);
+        div.appendChild(grade_field);
+        div.appendChild(credit_field);
+        input_fields.appendChild(div);
+    }
+    i++;
 }
