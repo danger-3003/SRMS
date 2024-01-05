@@ -16,7 +16,7 @@ var name=document.getElementById('name').innerText;
 //adding event listeners to the form
 document.getElementById('submit').addEventListener('submit',(e)=>
 {
-    e.preventDefault();
+    // e.preventDefault();
     var numb_subj=getvalue("no_subj");
     var sem=getvalue("semister");
     var marks=firebase.database().ref("Marks").child(name+"/"+sem);
@@ -141,31 +141,32 @@ var name_ref=firebase.database().ref("Marks");
 name_ref.on('value',function(data)
 {
     var names=data.val();
-    users=Object.keys(names);
+    var users=Object.keys(names);
     for(var i=0;i<users.length;i++)
     {
-        if (users[i]===name)
+        try
         {
-            var marks=firebase.database().ref("Marks").child(name);
-            marks.on('value',function(data)
+            if (users[i]===name)
             {
-                var Info=data.val();
-                keys=Object.keys(Info);
-                for(var i=0;i<keys.length;i++)
+                var marks=firebase.database().ref("Marks").child(name);
+                marks.on('value',function(data)
                 {
-                    var k=keys[i];
-                    console.log(Info[k].semister+" semister")
-                    var count=Object.keys(Info[k]).length;//returns number of entries in  each semister
-                    for(var j=1;j<count;j++)
+                    var Info=data.val();
+                    keys=Object.keys(Info);
+                    for(var i=0;i<keys.length;i++)
                     {
-                        console.log(Info[k]["subject"+j]);
+                        var k=keys[i];
+                        console.log(Info[k].semister+" semister")
+                        var count=Object.keys(Info[k]).length;//returns number of entries in  each semister
+                        for(var j=1;j<count;j++)
+                        {
+                            console.log(Info[k]["subject"+j]);
+                        }
                     }
-                }
-            })
+                })
+            }
+            else throw "Marks not yet entered"
         }
-        else
-        {
-            console.error("Marks not yet recorded");
-        }
+        catch(e){}
     }
 })
