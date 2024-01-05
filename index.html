@@ -31,6 +31,9 @@
                     <div class="flex flex-col my-2">
                         <label for="password" class="text-sm sm:text-base">Password</label>
                         <input type="password" name="" id="lpassword" required placeholder="Your password" class="text-sm sm:text-base text-[gray] px-2 py-0.5 sm:px-3 sm:py-1 border rounded outline-blue-800" style="border: 1px solid rgb(179, 176, 176);">
+                        <div class="flex items-center justify-end">
+                            <input type="checkbox" class="m-0.5" name="" id="show" onclick="lclicked()"><p class="text-sm text-gray-800">show password</p>
+                        </div>
                     </div>
                 </div>
                 <div class="flex items-center justify-end text-[0.8rem] sm:text-sm text-[gray]">
@@ -40,7 +43,7 @@
                     <button class="scale-90 sm:scale-100 bg-[#0000ff] hover:bg-[#3434ff] text-yellow-300 rounded-full text-sm font-bold px-10 py-2 transition-all duration-200 hover:cursor-pointer" id="login" style="box-shadow: rgba(1, 1, 48, 0.685) 0px 1px 5px 1px;">Login</button>
                 </div>
             </form>
-            <form class="w-full absolute left-[130%] transition-all duration-300" id="Signup">
+            <form class="w-full absolute left-[130%] -top-[1rem] transition-all duration-300" id="Signup">
                 <div>
                     <div class="flex flex-col my-2">
                         <label for="name" class="text-sm sm:text-base">Name <span class="text-[gray]">(Firstname+Surname)</span></label>
@@ -53,6 +56,9 @@
                     <div class="flex flex-col my-2">
                         <label for="password" class="text-sm sm:text-base">Password</label>
                         <input type="password" name="" id="spassword" placeholder="Your password" required class="text-sm sm:text-base text-[gray] px-2 py-0.5 sm:px-3 sm:py-1 border rounded outline-blue-800" style="border: 1px solid rgb(179, 176, 176);">
+                        <div class="flex items-center justify-end">
+                            <input type="checkbox" class="m-0.5" name="" id="show" onclick="sclicked()"><p class="text-sm text-gray-800">show password</p>
+                        </div>
                     </div>
                     <div>
                         <input type="radio" name="gender" id="male" value="male" required>
@@ -71,6 +77,28 @@
         </div>
     </div>
 </body>
+<script>
+    function lclicked()
+    {
+        var x = document.getElementById("lpassword");
+        code(x);
+    }
+    function sclicked()
+    {
+        var x = document.getElementById("spassword");
+        code(x);
+    }
+    function code(x)
+    {
+        if (x.type === "password")
+        {
+            x.type = "text";
+        }else
+        {
+            x.type = "password";
+        }
+    }
+</script>
 <script src="script.js"></script>
 <script src="firebase.js"></script>
 </html>
