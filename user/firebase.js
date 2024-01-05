@@ -33,7 +33,7 @@ document.getElementById('submit').addEventListener('submit',(e)=>
         var g=getvalue(grade);
         var c=getvalue(credit);
         //creating an object to store values dynamically
-        const obj={[subject]:sub,[credit]:c,[grade]:g};
+        const obj={subject:sub,credits:c,grade:g};
         //passing the object into the database
         marks.update({[subject]:obj});
     }
@@ -136,3 +136,36 @@ function addfield()
     //increasing i value for next subject until i value equals to number of subjects
     i++;
 }
+
+var name_ref=firebase.database().ref("Marks");
+name_ref.on('value',function(data)
+{
+    var names=data.val();
+    users=Object.keys(names);
+    for(var i=0;i<users.length;i++)
+    {
+        if (users[i]===name)
+        {
+            var marks=firebase.database().ref("Marks").child(name);
+            marks.on('value',function(data)
+            {
+                var Info=data.val();
+                keys=Object.keys(Info);
+                for(var i=0;i<keys.length;i++)
+                {
+                    var k=keys[i];
+                    console.log(Info[k].semister+" semister")
+                    var count=Object.keys(Info[k]).length;//returns number of entries in  each semister
+                    for(var j=1;j<count;j++)
+                    {
+                        console.log(Info[k]["subject"+j]);
+                    }
+                }
+            })
+        }
+        else
+        {
+            console.error("Marks not yet recorded");
+        }
+    }
+})
