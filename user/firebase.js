@@ -153,7 +153,7 @@ name_ref.on('value',function(data)
                 {
                     var Info=data.val();
                     keys=Object.keys(Info);
-                    var CGPA=0;
+                    var CGP=0;
                     for(var i=0;i<keys.length;i++)
                     {
                         var k=keys[i];
@@ -167,11 +167,11 @@ name_ref.on('value',function(data)
                         sem_value.classList="p-2"
 
                         main_div.appendChild(sem_value);//adding semister valued paragraph inside main div
-                        CGPA=Number(CGPA)+Number(marks_field(count,Info,k,main_div,CGPA));//function that reutrns all the individual subject grades, credits and subject name
+                        CGP=Number(CGP)+Number(marks_field(count,Info,k,main_div));//function that reutrns all the individual subject grades, credits and subject name
                         marks_section.appendChild(main_div);
                     }
                     const total_points=document.createElement('p');//creating paragraph for total GPS outside loop to overcome multiple iterations
-                    total_points.innerText="Total Grade Points (CGP) - "+(Number(CGPA)/Number(count)).toFixed(2);
+                    total_points.innerText="Total Grade Points (CGP) - "+(Number(CGP)/Number(keys));
                     total_points.classList="font-bold text-lg"
 
                     marks_section.classList="flex items-start justify-center flex-wrap"
@@ -187,8 +187,9 @@ name_ref.on('value',function(data)
 
 var marks_section=document.getElementById("marks");
 //creating a function that analyse all the subject names, credit points, grades individually...
-function marks_field(count,Info,k,main_div,CGPA)
+function marks_field(count,Info,k,main_div)
 {
+    var TCGP=0;
     var nume=0;var denum=0;
     for(var j=1;j<Number(count);j++)
     {
@@ -215,10 +216,10 @@ function marks_field(count,Info,k,main_div,CGPA)
         main_div.appendChild(div);
     }
     const SGPA=  document.createElement("p");//creating paragraph tag to view the semister grade points
-    CGPA=(Number(nume)/Number(denum)).toFixed(2);//toFixed() used to show number of decimal points
+    TCGP=(Number(nume)/Number(denum)).toFixed(2);//toFixed() used to show number of decimal points
     SGPA.innerText="SGPA : "+(Number(nume)/Number(denum)).toFixed(2);
     // grade points formula :
     // sum of ( sub grade point * sub credits ) / sum of all credits
     main_div.appendChild(SGPA);
-    return CGPA;
+    return TCGP;
 }
