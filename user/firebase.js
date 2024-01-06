@@ -137,7 +137,7 @@ function addfield()
     i++;
 }
 
-var name_ref=firebase.database().ref("Marks");
+var name_ref=firebase.database().ref("Marks");//creating refernce to check whether the user add their marks previusly
 name_ref.on('value',function(data)
 {
     var names=data.val();
@@ -146,23 +146,37 @@ name_ref.on('value',function(data)
     {
         try
         {
-            if (users[i]===name)
+            if (users[i]===name)//comapring if the user added their marks previously
             {
                 var marks=firebase.database().ref("Marks").child(name);
                 marks.on('value',function(data)
                 {
                     var Info=data.val();
                     keys=Object.keys(Info);
+                    var CGPA=0;
                     for(var i=0;i<keys.length;i++)
                     {
                         var k=keys[i];
-                        console.log(Info[k].semister+" semister")
                         var count=Object.keys(Info[k]).length;//returns number of entries in  each semister
-                        for(var j=1;j<count;j++)
-                        {
-                            console.log(Info[k]["subject"+j]);
-                        }
+                        
+                        const main_div=document.createElement("div");//creating main div
+                        main_div.classList="flex items-center justify-center flex-col p-5";
+
+                        const sem_value=document.createElement('p');//creating paragraph tag to display semister value
+                        sem_value.innerText="Semister - "+Info[k].semister;//keeping semister value as paragraph inner text
+                        sem_value.classList="p-2"
+
+                        main_div.appendChild(sem_value);//adding semister valued paragraph inside main div
+                        CGPA=Number(CGPA)+Number(marks_field(count,Info,k,main_div,CGPA));//function that reutrns all the individual subject grades, credits and subject name
+                        marks_section.appendChild(main_div);
                     }
+                    const total_points=document.createElement('p');//creating paragraph for total GPS outside loop to overcome multiple iterations
+                    total_points.innerText="Total Grade Points (CGP) - "+(Number(CGPA)/Number(count)).toFixed(2);
+                    total_points.classList="font-bold text-lg"
+
+                    marks_section.classList="flex items-start justify-center flex-wrap"
+
+                    document.getElementById("total_points_section").appendChild(total_points);//adding total_points paragraph to total points section
                 })
             }
             else throw "Marks not yet entered"
@@ -170,3 +184,41 @@ name_ref.on('value',function(data)
         catch(e){}
     }
 })
+
+var marks_section=document.getElementById("marks");
+//creating a function that analyse all the subject names, credit points, grades individually...
+function marks_field(count,Info,k,main_div,CGPA)
+{
+    var nume=0;var denum=0;
+    for(var j=1;j<Number(count);j++)
+    {
+        // the architecture must be like
+        // <div>
+        //     <p>subject name</p>  for subject name
+        //     <p>grade value</p> for grades
+        //     <p>for credit value</p>  for credits
+        // </div>
+        const div=document.createElement("div");
+        
+        const sub_name=document.createElement("p");
+        sub_name.innerText="Subject : "+Info[k]["subject"+j].subject;
+
+        const grade_value=document.createElement("p");
+        grade_value.innerText="Grades : "+Info[k]["subject"+j].grade + "  Credits : "+Info[k]["subject"+j].credits;
+
+        nume=Number(nume)+(Number(Info[k]["subject"+j].grade)*Number(Info[k]["subject"+j].credits));//multiplying grade points and credits of each subject
+        denum=Number(denum)+Number(Info[k]["subject"+j].credits);//adding all credits in each semister
+
+        div.appendChild(sub_name);
+        div.appendChild(grade_value);
+        div.classList="flex items-center justify-center flex-col p-0.5";
+        main_div.appendChild(div);
+    }
+    const SGPA=  document.createElement("p");//creating paragraph tag to view the semister grade points
+    CGPA=(Number(nume)/Number(denum)).toFixed(2);//toFixed() used to show number of decimal points
+    SGPA.innerText="SGPA : "+(Number(nume)/Number(denum)).toFixed(2);
+    // grade points formula :
+    // sum of ( sub grade point * sub credits ) / sum of all credits
+    main_div.appendChild(SGPA);
+    return CGPA;
+}
