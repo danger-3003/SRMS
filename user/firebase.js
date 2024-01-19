@@ -154,6 +154,7 @@ name_ref.on('value',function(data)
                     var Info=data.val();
                     keys=Object.keys(Info);
                     var CGP=0;
+                    var bargraph_maindiv=document.getElementById("user_graphs_section");
                     for(var i=0;i<keys.length;i++)
                     {
                         var k=keys[i];
@@ -165,16 +166,22 @@ name_ref.on('value',function(data)
                         const sem_value=document.createElement('p');//creating paragraph tag to display semister value
                         sem_value.innerText="Semister - "+Info[k].semister;//keeping semister value as paragraph inner text
                         sem_value.classList="p-2"
-
                         main_div.appendChild(sem_value);//adding semister valued paragraph inside main div
-                        CGP=Number(CGP)+Number(marks_field(count,Info,k,main_div));//function that reutrns all the individual subject grades, credits and subject name
+
+                        const subject_bargraph=document.createElement("div");
+                        subject_bargraph.id="subjects_bargraph_"+i;
+                        bargraph_maindiv.appendChild(subject_bargraph);//adding individual semister bargraph into bargraph div
+
+                        var semister_title="Semister "+Info[k].semister;
+
+                        CGP=Number(CGP)+Number(marks_field(count,Info,k,main_div,"subjects_bargraph_"+i,semister_title));//function that reutrns all the individual subject grades, credits and subject name
                         marks_section.appendChild(main_div);
                     }
                     const total_points=document.createElement('p');//creating paragraph for total GPS outside loop to overcome multiple iterations
-                    total_points.innerText="Total Grade Points (CGP) - "+(Number(CGP)/Number(keys));
-                    total_points.classList="font-bold text-lg"
+                    total_points.innerText="Total Grade Points (CGP) - "+((Number(CGP)/Number(keys.length)).toFixed(2));
+                    total_points.classList="font-bold text-lg";
 
-                    marks_section.classList="flex items-start justify-center flex-wrap"
+                    marks_section.classList="flex items-start justify-center flex-wrap";
 
                     document.getElementById("total_points_section").appendChild(total_points);//adding total_points paragraph to total points section
                 })
@@ -187,10 +194,14 @@ name_ref.on('value',function(data)
 
 var marks_section=document.getElementById("marks");
 //creating a function that analyse all the subject names, credit points, grades individually...
-function marks_field(count,Info,k,main_div)
+function marks_field(count,Info,k,main_div,subject_bargraph,semister_title)
 {
     var TCGP=0;
     var nume=0;var denum=0;
+    //creating arrays for plotting graph
+    var subjects_array=[];
+    var grades_array=[];
+    //creating loop to get each subject, grade, credits
     for(var j=1;j<Number(count);j++)
     {
         // the architecture must be like
@@ -203,9 +214,11 @@ function marks_field(count,Info,k,main_div)
         
         const sub_name=document.createElement("p");
         sub_name.innerText="Subject : "+Info[k]["subject"+j].subject;
+        subjects_array.push(Info[k]["subject"+j].subject);
 
         const grade_value=document.createElement("p");
         grade_value.innerText="Grades : "+Info[k]["subject"+j].grade + "  Credits : "+Info[k]["subject"+j].credits;
+        grades_array.push(Info[k]["subject"+j].grade);
 
         nume=Number(nume)+(Number(Info[k]["subject"+j].grade)*Number(Info[k]["subject"+j].credits));//multiplying grade points and credits of each subject
         denum=Number(denum)+Number(Info[k]["subject"+j].credits);//adding all credits in each semister
@@ -215,6 +228,25 @@ function marks_field(count,Info,k,main_div)
         div.classList="flex items-center justify-center flex-col p-0.5";
         main_div.appendChild(div);
     }
+    console.log(subjects_array,grades_array);
+    const data = [{
+    x:subjects_array,
+    y:grades_array,
+    type:"bar",
+    orientation:"v",
+    marker: {color:"rgba(0,0,255,0.6)"},
+    width: 0.5
+    }];
+
+    const layout = {
+        title:semister_title,
+        barmode: 'stack',
+        bargap: 0.05,
+        xaxis:{title:"Semister Sujects"},
+        yaxis:{title:"Grades Scored",range:[0,10]}
+    };
+
+    Plotly.newPlot(subject_bargraph, data, layout,{displayModeBar: false});
     const SGPA=  document.createElement("p");//creating paragraph tag to view the semister grade points
     TCGP=(Number(nume)/Number(denum)).toFixed(2);//toFixed() used to show number of decimal points
     SGPA.innerText="SGPA : "+(Number(nume)/Number(denum)).toFixed(2);

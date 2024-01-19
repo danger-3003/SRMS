@@ -5,8 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <title>SRMS - Student Result Management System</title>
     <link rel="icon/image" href="../src/SRMS-icon.webp">
+    <style>
+        .js-plotly-plot
+        {
+            width: 30rem;
+            height: 30rem;
+        }
+        @media screen and (max-width:470px) 
+        {
+            .js-plotly-plot
+            {
+                width: 20rem;
+                height: 20rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <h1 id="name"></h1>
@@ -23,8 +39,11 @@
             <button type="submit">submit</button>
         </form>
     </div>
-    <div id="marks"></div>
-    <div id="total_points_section" class="flex items-center justify-center"></div>
+    <div id="user_marks_section">
+        <div id="marks" class="flex flex-wrap"></div>
+        <div id="total_points_section" class="flex items-center justify-center"></div>
+    </div>
+    <div id="user_graphs_section" class="flex flex-wrap items-center justify-center"></div>
 </body>
 <script src="script.js "></script>
 <script src="firebase.js"></script>
