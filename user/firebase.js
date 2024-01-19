@@ -234,7 +234,7 @@ function marks_field(count,Info,k,main_div,subject_bargraph,semister_title)
     y:grades_array,
     type:"bar",
     orientation:"v",
-    marker: {color:"rgba(0,0,255,0.6)"},
+    marker: {color:"rgba(100,20,155,0.6)"},
     width: 0.5
     }];
 
