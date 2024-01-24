@@ -7,9 +7,32 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <title>SRMS - Student Result Management System</title>
-    <link rel="icon/image" href="../src/SRMS-icon.webp">
+    <link rel="icon" href="../src/SRMS-icon.webp">
     <style>
         .js-plotly-plot
+        {
+            width: 30rem;
+            height: 30rem;
+        }
+        .svg-container
+        {
+            width: 20rem;
+            height: 20rem;
+        }
+        @media screen and (max-width:768px) 
+        {
+            .js-plotly-plot
+            {
+                width: 20rem;
+                height: 20rem;
+            }
+            .svg-container
+            {
+                width: 10rem;
+                height: 15rem;
+            }
+        }
+        /* .js-plotly-plot
         {
             width: 30rem;
             height: 30rem;
@@ -18,32 +41,36 @@
         {
             .js-plotly-plot
             {
-                width: 20rem;
-                height: 20rem;
+                width: 15rem;
+                height: 15rem;
             }
-        }
+        } */
     </style>
 </head>
 <body>
     <h1 id="name"></h1>
     <h1 id="email"></h1>
-    <div class="flex items-center justify-center flex-col">
-        <input type="number" name="no_subj" class="border-[2px]" placeholder="number of subjects" id="no_subj">
-        <button id="add">Add</button>
-        <form action="" id="submit" class="flex items-center flex-col">
-            <div>
-                <label for="semister">Semister</label>
-                <input type="text" name="semister" class="border-[2px]" placeholder="semister" id="semister">
-            </div>
-            <div id="input_fields"></div>
-            <button type="submit">submit</button>
-        </form>
-    </div>
-    <div id="user_marks_section">
-        <div id="marks" class="flex flex-wrap"></div>
-        <div id="total_points_section" class="flex items-center justify-center"></div>
-    </div>
-    <div id="user_graphs_section" class="flex flex-wrap items-center justify-center"></div>
+    <section id="profile">
+        <div class="flex items-center justify-center flex-col">
+            <input type="number" name="no_subj" class="border-[2px]" placeholder="number of subjects" id="no_subj">
+            <button id="add">Add</button>
+            <form action="" id="submit" class="flex items-center flex-col">
+                <div>
+                    <label for="semister">Semister</label>
+                    <input type="text" name="semister" class="border-[2px]" placeholder="semister" id="semister">
+                </div>
+                <div id="input_fields"></div>
+                <button type="submit">submit</button>
+            </form>
+        </div>
+        <div id="user_marks_section">
+            <div id="marks" class="flex flex-wrap"></div>
+            <div id="total_points_section" class="flex items-center justify-center"></div>
+        </div>
+    </section>
+    <section id="analytics">
+        <div id="user_graphs_section" class="flex flex-wrap items-center justify-center"></div>
+    </section>
 </body>
 <script src="script.js "></script>
 <script src="firebase.js"></script>
