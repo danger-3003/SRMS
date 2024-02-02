@@ -137,7 +137,9 @@ function addfield()
     i++;
 }
 
+var marks_section=document.getElementById("marks");
 var name_ref=firebase.database().ref("Marks");//creating refernce to check whether the user add their marks previusly
+
 name_ref.on('value',function(data)
 {
     var names=data.val();
@@ -192,7 +194,6 @@ name_ref.on('value',function(data)
     }
 })
 
-var marks_section=document.getElementById("marks");
 //creating a function that analyse all the subject names, credit points, grades individually...
 function marks_field(count,Info,k,main_div,subject_bargraph,semister_title)
 {
@@ -201,32 +202,73 @@ function marks_field(count,Info,k,main_div,subject_bargraph,semister_title)
     //creating arrays for plotting graph
     var subjects_array=[];
     var grades_array=[];
+    // creating a table to store marks in an organised way
+    const table=document.createElement("table");
+        table.classList="border border-slate-500 rounded";
+
+        const tr=document.createElement("tr");//creating a table row 1st
+        const td1=document.createElement("td");//creating a 1st row 1st column cell and adding text
+        td1.innerText="Subject";
+        td1.classList="font-bold"
+        const td2=document.createElement("td");//creating a 1st row 2nd column cell and adding text
+        td2.innerText="Grade";
+        td2.classList="font-bold"
+        const td3=document.createElement("td");//creating a 1st row 3rd column cell and adding text
+        td3.innerText="Credits";
+        td3.classList="font-bold"
+        //adding each cell to the table row
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        tr.appendChild(td3);
+        //adding the row to the table
+        table.appendChild(tr);
     //creating loop to get each subject, grade, credits
     for(var j=1;j<Number(count);j++)
     {
         // the architecture must be like
         // <div>
-        //     <p>subject name</p>  for subject name
-        //     <p>grade value</p> for grades
-        //     <p>for credit value</p>  for credits
+            // <table>
+            //        <tr>
+            //             <td>Subject</td>
+            //             <td>Grade</td>
+            //             <td>Credits</td>
+            //         </tr>
+            //         <tr>
+            //             <td>subj_1</td>
+            //             <td>grade_1</td>
+            //             <td>credit_1</td>
+            //         </tr>
+            //         .
+            //         .
+            //         .
+            //         .
+            //         .
+            // </table>
         // </div>
-        const div=document.createElement("div");
         
-        const sub_name=document.createElement("p");
-        sub_name.innerText="Subject : "+Info[k]["subject"+j].subject;
+        const record=document.createElement("tr");
+        const sub_name=document.createElement("td");
+        sub_name.innerText=Info[k]["subject"+j].subject;
         subjects_array.push(Info[k]["subject"+j].subject);
 
-        const grade_value=document.createElement("p");
-        grade_value.innerText="Grades : "+Info[k]["subject"+j].grade + "  Credits : "+Info[k]["subject"+j].credits;
+        const grade_value=document.createElement("td");
+        grade_value.innerText=Info[k]["subject"+j].grade;
         grades_array.push(Info[k]["subject"+j].grade);
+
+        const credit_value=document.createElement("td");
+        credit_value.innerText=Info[k]["subject"+j].credits;
 
         nume=Number(nume)+(Number(Info[k]["subject"+j].grade)*Number(Info[k]["subject"+j].credits));//multiplying grade points and credits of each subject
         denum=Number(denum)+Number(Info[k]["subject"+j].credits);//adding all credits in each semister
 
-        div.appendChild(sub_name);
-        div.appendChild(grade_value);
-        div.classList="flex items-center justify-center flex-col p-0.5";
-        main_div.appendChild(div);
+        //adding the subject_name, grade_value, credit_value to the record - row
+        record.appendChild(sub_name);
+        record.appendChild(grade_value);
+        record.appendChild(credit_value);
+
+        //adding the record - row to the table
+        table.appendChild(record);
+        main_div.appendChild(table);
     }
     console.log(subjects_array,grades_array);
     const data = [{
@@ -250,8 +292,9 @@ function marks_field(count,Info,k,main_div,subject_bargraph,semister_title)
     const SGPA=  document.createElement("p");//creating paragraph tag to view the semister grade points
     TCGP=(Number(nume)/Number(denum)).toFixed(2);//toFixed() used to show number of decimal points
     SGPA.innerText="SGPA : "+(Number(nume)/Number(denum)).toFixed(2);
+    SGPA.classList="font-bold";
     // grade points formula :
-    // sum of ( sub grade point * sub credits ) / sum of all credits
+    // sum of ( sub_grade_point * sub_credits ) / sum_of_all_credits
     main_div.appendChild(SGPA);
     return TCGP;
 }
