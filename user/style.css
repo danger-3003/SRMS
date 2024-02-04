@@ -19,6 +19,17 @@ td
     width: 6rem;
     padding: 0.3rem;
 }
+option
+{
+    /* bg-[#323955] border-b-2 px-2 py-1 text-white outline-none rounded-sm */
+    background-color: #323955;
+    padding: 0.25rem 0.5rem;
+    color: rgb(255 255 255);
+    outline: none;
+    border-radius: 0.125rem;
+    border-bottom-width: 2px;
+    text-align: center;
+}
 @media screen and (max-width:768px) 
 {
     .js-plotly-plot

@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://unpkg.com/scrollreveal"></script>
     <title>SRMS - Student Result Management System</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,34 +29,80 @@
             </div>
         </nav>
         <div class="fixed bottom-5 right-5">
-            <a href=""><i class="fa-solid fa-circle-question text-2xl md:text-4xl absolute z-10"></i></a>
-            <i class="fa-solid fa-circle-question text-2xl md:text-4xl animate-ping"></i>
+            <a href=""><i class="fa-solid fa-circle-question text-3xl md:text-4xl absolute z-10"></i></a>
+            <i class="fa-solid fa-circle-question text-3xl md:text-4xl animate-ping"></i>
         </div>
     </header>
-    <section id="profile_section" class="h-screen py-20">
+    <section id="profile_section" class="h-max py-20 slide-up">
         <h1 id="name"></h1>
         <h1 id="email"></h1>
+        <div>
+            <div>
+                <p>Number of Semesters</p>
+                <p id="semester_count"></p>
+            </div>
+            <div>
+                <p>Number of Subjects</p>
+                <p id="subjects_count"></p>
+            </div>
+            <div>
+                <p>Total Credits</p>
+                <p id="credits"></p>
+            </div>
+        </div>
     </section>
-    <section id="marks_section" class="py-10">
+    <section id="marks_section" class="pt-10 pb-5 slide-up">
+        <div class="text-center font-extrabold text-green-300 my-3 text-2xl sm:text-3xl lg:text-4xl">
+            <p>Obtained Marks</p>
+        </div>
         <div class="flex items-center flex-col">
+            <div>
+                <p id="no_record" class="text-[#ff5b5b] text-center"></p>
+            </div>
             <div id="marks"></div>
             <div id="total_points_section"></div>
         </div>
     </section>
-    <section id="analytics_section" class="py-10">
-        <div id="user_graphs_section" class="flex flex-wrap items-center justify-center"></div>
+    <section id="analytics_section" class="pt-10 pb-5 slide-up">
+        <div class="text-center font-extrabold text-green-300 my-3 text-2xl sm:text-3xl lg:text-4xl">
+            <p>Marks Analytics</p>
+        </div>
+        <div id="user_graphs_section" class="flex flex-wrap items-center justify-center">
+            <div>
+                <p id="no_analytics" class="text-[#ff5b5b] text-center"></p>
+            </div>
+        </div>
     </section>
-    <section id="addmarks" class="py-10">
+    <section id="addmarks" class="py-10 slide-up">
+        <div class="text-center font-extrabold text-green-300 my-3 text-2xl sm:text-3xl lg:text-4xl">
+            <p>New Entry</p>
+        </div>
         <div class="flex items-center justify-center flex-col">
-            <input type="number" name="no_subj" class="border-[2px]" placeholder="number of subjects" id="no_subj">
-            <button id="add">Add</button>
-            <form action="" id="submit" class="flex items-center flex-col">
-                <div>
-                    <label for="semister">Semister</label>
-                    <input type="text" name="semister" class="border-[2px]" placeholder="semister" id="semister">
+            <div>
+                <label for="no_subj">Subjects</label>
+                <input type="number" name="no_subj" class="bg-[#323955] border-b-2 px-2 py-1 text-white outline-none rounded-sm w-20" placeholder="No. of Subjects" required id="no_subj">
+                <button id="add" class="relative inline-flex items-center justify-center p-4 px-5 py-1 overflow-hidden font-medium text-indigo-600 transition duration-300 ease-out border-2 border-cyan-500 rounded-full shadow-md group">
+                    <span class="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 -translate-x-full bg-cyan-500 group-hover:translate-x-0 ease">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </span>
+                    <span class="absolute flex items-center justify-center w-full h-full text-cyan-500 transition-all duration-300 transform group-hover:translate-x-full ease">Add</span>
+                    <span class="relative invisible">Add</span>
+                </button>
+            </div>
+            <form action="" id="submit" class="my-4 flex items-center justify-center flex-col">
+                <div class="m-2 flex flex-wrap items-center justify-center">
+                    <label for="semister">Semester</label>
+                    <input type="number" placeholder="number" name="semister" class="bg-[#323955] border-b-2 px-2 py-1 text-white outline-none rounded-sm" required id="semister">
                 </div>
-                <div id="input_fields"></div>
-                <button type="submit">submit</button>
+                <div id="input_fields" class=" text-blue-900 m-2"></div>
+                <button type="submit" class="relative inline-block text-lg group m-2">
+                    <span class="relative z-10 block px-5 py-1.5 overflow-hidden font-medium leading-tight text-white transition-colors duration-300 ease-out border-2 border-cyan-400 rounded-lg group-hover:text-white">
+                        <span class="absolute inset-0 w-full h-full px-5 py-1.5 rounded-lg bg-[#323955]"></span>
+                        <span class="absolute left-0 w-48 h-48 -ml-2 transition-all duration-300 origin-top-right -rotate-90 -translate-x-full translate-y-12 bg-cyan-400 group-hover:-rotate-180 ease"></span>
+                        <span class="relative">Submit</span>
+                    </span>
+                    <span class="absolute bottom-0 right-0 w-full h-10 -mb-1 -mr-1 transition-all duration-200 ease-linear bg-cyan-400 rounded-lg group-hover:mb-0 group-hover:mr-0" data-rounded="rounded-lg"></span>
+                </button>            
             </form>
         </div>
     </section>

@@ -79,20 +79,27 @@ function addfield()
         // </div>
 
         const sub_name=document.createElement('input');
+        sub_name.classList="bg-[#323955] border-b-[1px] px-2 py-1 text-white outline-none rounded-sm mx-2 my-1";
         sub_name.type='text';
         sub_name.id=subject;
-        sub_name.placeholder="subject name";
+        sub_name.required=true;
+        sub_name.placeholder="Subject Name";
 
         const grade_field=document.createElement('select');
-        grade_field.name='grade';
+        grade_field.classList="bg-[#323955] border-b-[1px] px-2 py-1 text-white outline-none rounded-sm mx-2 my-1";
+        grade_field.name='Grade';
+        grade_field.required=true;
         grade_field.id=grade;
 
         const credit_field=document.createElement('input');
+        credit_field.classList="bg-[#323955] border-b-[1px] px-2 py-1 text-white outline-none rounded-sm mx-2 my-1 w-20";
         credit_field.type='text';
         credit_field.id=credit;
-        credit_field.placeholder="number of credits";
+        credit_field.required=true;
+        credit_field.placeholder="Credits";
 
         const div=document.createElement('div');
+        div.classList="flex flex-wrap items-center justify-center"
 
         var opt1 = document.createElement('option');
         opt1.value = 10;
@@ -145,6 +152,13 @@ name_ref.on('value',function(data)
 {
     var names=data.val();
     var users=Object.keys(names);
+    if(names[name]==undefined)
+    {
+        var noRecord=document.getElementById("no_record");
+        var noAnalytics=document.getElementById("no_analytics");
+        noRecord.innerText="No reocrds found...";
+        noAnalytics.innerText="No reocrds found, please add Marks to activate Analytics...";
+    }
     for(var i=0;i<users.length;i++)
     {
         try
@@ -156,18 +170,22 @@ name_ref.on('value',function(data)
                 {
                     var Info=data.val();
                     semesters=Object.keys(Info);
+
                     var CGP=0;
                     var bargraph_maindiv=document.getElementById("user_graphs_section");
+                    var semester_subject_count=0;
+                    var credits_count=0;
+
                     //checking whether the user have any records or not
-                    if (semesters.length !=0)
+                    if (semesters.length !=0)//if the semesters count not equal to zero
                     {
                         //creating loop to iterate each semester of the
                         for(var i=0;i<semesters.length;i++)
                         {
                             var indvd_sem=semesters[i];
-                            var count=Object.keys(Info[indvd_sem]).length;//returns number of subjects in  each semister
-                            
-                            const main_div=document.createElement("div");//creating main div
+                            var subject_count=Object.keys(Info[indvd_sem]).length;//returns number of subjects in  each semister
+
+                            const main_div=document.createElement("div");//creating main div for each table that contains sem number, table, SGP.
                             main_div.classList="flex items-center justify-center flex-col p-5";
 
                             const sem_value=document.createElement('p');//creating paragraph tag to display semister value
@@ -175,19 +193,26 @@ name_ref.on('value',function(data)
                             sem_value.classList="p-2 font-semibold text-lg"
                             main_div.appendChild(sem_value);//adding semister valued paragraph inside main div
 
-                            const subject_bargraph=document.createElement("div");
+                            const subject_bargraph=document.createElement("div");//creating a div for individual bargraph
                             subject_bargraph.id="subjects_bargraph_"+i;
                             subject_bargraph.classList="mx-10 my-5";
                             bargraph_maindiv.appendChild(subject_bargraph);//adding individual semister bargraph into bargraph div
 
                             var semister_title="Semister "+Info[indvd_sem].semister;//creating semester title for the bargraph and passed into the marks_field() function
-
-                            CGP=Number(CGP)+Number(marks_field(count,Info,indvd_sem,main_div,"subjects_bargraph_"+i,semister_title));//function that reutrns all the individual subject grades, credits and subject name
+                            
+                            //adding number of subjects each time to the semester_subject_count -- counting the total number of subjects in all semester
+                            semester_subject_count=Number(semester_subject_count)+Number(subject_count)-1;
+                            SGP_and_creditCount=marks_field(subject_count,Info,indvd_sem,main_div,"subjects_bargraph_"+i,semister_title);//function that reutrns all the individual subject grades, credits and subject name
+                            //adding the total credits in each semester
+                            credits_count=Number(credits_count)+Number(SGP_and_creditCount.credits_count);
+                            //calculating Total GPA
+                            CGP=Number(CGP)+Number(SGP_and_creditCount.total_points);
+                            //appending the total table section into the marks_section div
                             marks_section.appendChild(main_div);
                         }
                         const total_points=document.createElement('p');//creating paragraph for total GPS outside loop to overcome multiple iterations
                         total_points.innerText="Total Grade Points (CGP) - "+((Number(CGP)/Number(semesters.length)).toFixed(2));
-                        total_points.classList="font-bold text-xl text-yellow-200";
+                        total_points.classList="font-bold text-center text-xl text-yellow-200";
 
                         marks_section.classList="flex items-start justify-center flex-wrap";
 
@@ -197,6 +222,9 @@ name_ref.on('value',function(data)
                     {
                         marks_section.innerText="No records found...";
                     }
+                    document.getElementById("semester_count").innerText=semesters.length;//displaying the total semesters in the profile section
+                    document.getElementById("subjects_count").innerText=semester_subject_count;//displaying the total count of subjects in the profile section
+                    document.getElementById("credits").innerText=credits_count;//displaying the total credits in the profile section
                 })
             }
             else throw "user not found"
@@ -205,10 +233,11 @@ name_ref.on('value',function(data)
     }
 })
 
-//creating a function that analyse all the subject names, credit points, grades individually...
-function marks_field(count,Info,indvd_sem,main_div,subject_bargraph,semister_title)
+//creating a function that analyse all the subject names, credit points, grades, bargraphs individually...
+function marks_field(subject_count,Info,indvd_sem,main_div,subject_bargraph,semister_title)
 {
     var TCGP=0;
+    var credit_count=0;
     var nume=0;var denum=0;
 
     //creating arrays for plotting graph
@@ -234,10 +263,12 @@ function marks_field(count,Info,indvd_sem,main_div,subject_bargraph,semister_tit
         tr.appendChild(td1);
         tr.appendChild(td2);
         tr.appendChild(td3);
+
         //adding the row to the table
         table.appendChild(tr);
+
     //creating loop to get each subject, grade, credits
-    for(var j=1;j<Number(count);j++)
+    for(var j=1;j<Number(subject_count);j++)
     {
         // the architecture must be like
         // <div>
@@ -283,8 +314,16 @@ function marks_field(count,Info,indvd_sem,main_div,subject_bargraph,semister_tit
         //adding the record - row to the table
         table.appendChild(record);
         main_div.appendChild(table);
+        
+        if (Info[indvd_sem]["subject"+j].grade<5)//skipping the credit value if he/she fails a subject -- F=5
+        {
+            credit_count=Number(credit_count)+0;
+        }
+        else//adding the credit value if he/she pass
+        {
+            credit_count=Number(credit_count)+Number(Info[indvd_sem]["subject"+j].credits);
+        }
     }
-    console.log(subjects_array,grades_array);
     const data = [{
     x:subjects_array,
     y:grades_array,
@@ -313,13 +352,12 @@ function marks_field(count,Info,indvd_sem,main_div,subject_bargraph,semister_tit
     };
 
     Plotly.newPlot(subject_bargraph, data, layout,{displayModeBar: false});
-    const SGPA=  document.createElement("p");//creating paragraph tag to view the semister grade points
+    const SGPA=  document.createElement("p");//creating paragraph tag to display the semister grade points
     SGPA.innerText="SGPA : "+(Number(nume)/Number(denum)).toFixed(2);
-    SGPA.classList="font-medium p-2";
-    // grade points formula : sum of ( sub_grade_point * sub_credits ) / sum_of_all_credits
+    SGPA.classList="font-medium p-2";// grade points formula : sum of ( sub_grade_point * sub_credits ) / sum_of_all_credits
     main_div.appendChild(SGPA);
 
     //calculating total grade points
     TCGP=(Number(nume)/Number(denum)).toFixed(2);//toFixed() used to show 2 decimal points
-    return TCGP;
+    return {total_points:TCGP,credits_count:credit_count};
 }
