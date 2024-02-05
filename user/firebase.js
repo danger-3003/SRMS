@@ -175,6 +175,8 @@ name_ref.on('value',function(data)
                     var bargraph_maindiv=document.getElementById("user_graphs_section");
                     var semester_subject_count=0;
                     var credits_count=0;
+                    var sem_GPA=[];//for graph in profile section
+                    var sem_names=[];
 
                     //checking whether the user have any records or not
                     if (semesters.length !=0)//if the semesters count not equal to zero
@@ -198,8 +200,9 @@ name_ref.on('value',function(data)
                             subject_bargraph.classList="mx-10 my-5";
                             bargraph_maindiv.appendChild(subject_bargraph);//adding individual semister bargraph into bargraph div
 
-                            var semister_title="Semister "+Info[indvd_sem].semister;//creating semester title for the bargraph and passed into the marks_field() function
-                            
+                            var semister_title="Semester "+Info[indvd_sem].semister;//creating semester title for the bargraph and passed into the marks_field() function
+                            sem_names.push(semister_title);
+
                             //adding number of subjects each time to the semester_subject_count -- counting the total number of subjects in all semester
                             semester_subject_count=Number(semester_subject_count)+Number(subject_count)-1;
                             SGP_and_creditCount=marks_field(subject_count,Info,indvd_sem,main_div,"subjects_bargraph_"+i,semister_title);//function that reutrns all the individual subject grades, credits and subject name
@@ -207,6 +210,8 @@ name_ref.on('value',function(data)
                             credits_count=Number(credits_count)+Number(SGP_and_creditCount.credits_count);
                             //calculating Total GPA
                             CGP=Number(CGP)+Number(SGP_and_creditCount.total_points);
+                            sem_GPA.push(SGP_and_creditCount.total_points);
+                            console.log(sem_GPA,sem_names)
                             //appending the total table section into the marks_section div
                             marks_section.appendChild(main_div);
                         }
@@ -217,6 +222,35 @@ name_ref.on('value',function(data)
                         marks_section.classList="flex items-start justify-center flex-wrap";
 
                         document.getElementById("total_points_section").appendChild(total_points);//adding total_points paragraph to total points section
+                    
+                        //graphs in profile section..
+                        const data = [{
+                                x:sem_names,
+                                y:sem_GPA,
+                                type:"bar",
+                                orientation:"v",
+                                marker: 
+                                {
+                                    color:"rgb(49,230,241)",
+                                    borderRadius: 10
+                                },
+                                width: 0.5
+                            }];
+                        
+                        const layout = {
+                            title:semister_title,
+                            barmode: 'stack',
+                            bargap: 0.05,
+                            xaxis:{title:"Semesters",borderRadius: 100},
+                            yaxis:{title:"Scores",range:[0,10],borderRadius: 100},
+                            paper_bgcolor: '#323955', // set paper background color
+                            plot_bgcolor: '#323955',
+                            borderRadius: 100,
+                            font: {
+                                color: 'white' // set font color
+                            }
+                        };
+                        Plotly.newPlot(score_overview, data, layout,{displayModeBar: false});
                     }
                     else
                     {
@@ -225,6 +259,9 @@ name_ref.on('value',function(data)
                     document.getElementById("semester_count").innerText=semesters.length;//displaying the total semesters in the profile section
                     document.getElementById("subjects_count").innerText=semester_subject_count;//displaying the total count of subjects in the profile section
                     document.getElementById("credits").innerText=credits_count;//displaying the total credits in the profile section
+                    //displaying the total CGPA and total percentage in profile secion
+                    document.getElementById("CGPA").innerText=(Number(CGP)/Number(semesters.length)).toFixed(2);
+                    document.getElementById("percentage").innerText=((Number(CGP)/Number(semesters.length)).toFixed(2)-0.7).toFixed(2)*10+"%";
                 })
             }
             else throw "user not found"
@@ -232,7 +269,6 @@ name_ref.on('value',function(data)
         catch(e){}
     }
 })
-
 //creating a function that analyse all the subject names, credit points, grades, bargraphs individually...
 function marks_field(subject_count,Info,indvd_sem,main_div,subject_bargraph,semister_title)
 {
@@ -341,7 +377,7 @@ function marks_field(subject_count,Info,indvd_sem,main_div,subject_bargraph,semi
         title:semister_title,
         barmode: 'stack',
         bargap: 0.05,
-        xaxis:{title:"Semister Sujects",borderRadius: 100},
+        xaxis:{title:"Semester Sujects",borderRadius: 100},
         yaxis:{title:"Grades Scored",range:[0,10],borderRadius: 100},
         paper_bgcolor: '#323955', // set paper background color
         plot_bgcolor: '#323955',

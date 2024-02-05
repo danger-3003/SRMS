@@ -13,45 +13,100 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Varela+Round&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
     <link rel="icon" href="../src/SRMS-icon.webp">
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-[#272E4B] text-white" style="font-family: Poppins;">
-    <header class="w-full bg-[#484F6B] fixed z-10 shadow-2xl" style="font-family: Varela Round;">
-        <nav class="relative">
-            <div>
-                <img src="/src/SRMS-icon.webp" class="h-8 top-2 left-5 rounded-full absolute" alt="icon">
-            </div>
-            <div class="flex flex-row items-center justify-center h-12">
-                <a href="#profile_section" class="px-1 py-0.5 m-3">Profile</a>
-                <a href="#marks_section" class="px-1 py-0.5 m-3">Marks</a>
-                <a href="#analytics_section" class="px-1 py-0.5 m-3">Analytics</a>
+    <header id="toggle_menu" class="h-full bg-[#484F6B] fixed flex justify-center z-[4] shadow-2xl px-20 w-36 -left-40 md:left-0 transition-all duration-500" style="font-family: Varela Round;">
+        <nav class="mt-10">
+            <div class="flex flex-col items-center justify-center h-12 mt-32">
+                <img src="/src/profile.jpg" class="rounded-full mt-5 h-20 sm:h-auto">
+                <a href="#profile_section" class="px-1 py-0.5 my-2 mt-10">Profile</a>
+                <a href="#marks_section" class="px-1 py-0.5 my-2">Marks</a>
+                <a href="#analytics_section" class="px-1 py-0.5 my-2">Analytics</a>
             </div>
         </nav>
+        <a href="/" class="px-1 py-0.5 text-base my-2 absolute bottom-5">Logout</a>
         <div class="fixed bottom-5 right-5">
-            <a href=""><i class="fa-solid fa-circle-question text-3xl md:text-4xl absolute z-10"></i></a>
+            <a href=""><i class="fa-solid fa-circle-question text-3xl md:text-4xl absolute z-[1]"></i></a>
             <i class="fa-solid fa-circle-question text-3xl md:text-4xl animate-ping"></i>
         </div>
     </header>
-    <section id="profile_section" class="h-max py-20 slide-up">
-        <h1 id="name"></h1>
-        <h1 id="email"></h1>
+    <div class="fixed z-[4] text-xl sm:top-3 top-6 left-5">
+        <i class="fa-solid fa-bars block md:hidden transition-all duration-500" id="bars"></i>
+        <!-- toggle icon -->
+    </div>
+    <div class="md:pl-40 w-full text-center font-semibold text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl bg-[#272e4bd0] fixed z-[3]" style="backdrop-filter: blur(5px);">
+        <p class="my-2">Student Result<br class="block sm:hidden"> Managment System</p>
         <div>
-            <div>
-                <p>Number of Semesters</p>
-                <p id="semester_count"></p>
+            <img src="/src/SRMS-icon.webp" class="h-8 sm:top-1 lg:top-2 xl:top-2.5 sm:right-5 rounded-full hidden sm:block sm:absolute" alt="icon">
+        </div>
+        <!-- SRMS icon -->
+    </div>
+    <section id="profile_section" class="md:ml-40 h-max pt-28 pb-5 lg:py-32 slide-up">
+        <div class="flex items-center justify-center flex-col sm:flex-row mx-10">
+            <div class="bg-[#5A77DF] h-max w-[90vw] md:w-[38rem] sm:p-7 rounded-3xl relative flex">
+                <div class="w-[90vw] sm:w-max relative z-[1] bg-[#5a77df3f] p-3 rounded-lg" style="backdrop-filter: blur(5px);">
+                    <div class="flex items-start font-extrabold text-base md:text-xl lg:text-2xl">
+                        <p class="font-bold">Hello <span id="name" class="text-xl md:text-2xl lg:text-3xl"></span>,</p>
+                    </div>
+                    <div style="font-family: 'Itim', cursive;">
+                        <div class="text-base md:text-xl lg:text-2xl mt-4 mb-2">
+                            <p class="-my-2">You have something to see,</p>
+                            <p>Let's have a look...</p>
+                        </div>
+                        <div class="text-sm sm:text-base md:text-xl text-yellow-400">
+                            <a href="#marks_section">review all</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="absolute right-3 bottom-0 lg:-top-7 xl:-top-14 z-[2] sm:z-[0]">
+                    <img src="/src/boy_clay.webp" class="h-20 sm:h-[80%] lg:h-52" alt="">
+                </div>
             </div>
-            <div>
-                <p>Number of Subjects</p>
-                <p id="subjects_count"></p>
-            </div>
-            <div>
-                <p>Total Credits</p>
-                <p id="credits"></p>
+            <div class="m-5 lg:m-10 text-base lg:text-xl flex items-center justify-center flex-col font-semibold">
+                <div class="flex">
+                    <p>Percentage </p>
+                    <p id="percentage" class="text-yellow-300 ml-3"></p>
+                </div>
+                <div class="flex">
+                    <p>Total CGPA </p>
+                    <p id="CGPA" class="text-yellow-300 ml-3"></p>
+                </div>
             </div>
         </div>
+        <div class="flex items-center justify-center flex-wrap mt-5 sm:mt-10">
+            <div class="flex items-center justify-center flex-col bg-[#484F6B] m-3 md:m-5 w-48 md:w-52 lg:w-60 rounded-2xl px-3 md:px-5 pr-1 py-2">
+                <div class="flex items-center justify-center text-sm lg:text-base">
+                    <p>Total<br> Sem's</p>
+                    <div class="h-16 w-[0.09rem] md:w-0.5 rounded-full ml-3 bg-white"></div>
+                    <i class="fa-solid fa-paste text-xl sm:text-2xl lg:text-4xl m-4 p-4 text-[#110042] bg-cyan-400 rounded-full"></i>
+                </div>
+                <p id="semester_count" class="text-base md:text-lg lg:text-xl font-semibold"></p>
+            </div>
+            <div class="flex items-center justify-center flex-col bg-[#484F6B] m-3 md:m-5 w-48 md:w-52 lg:w-60 rounded-2xl px-3 md:px-5 pr-1 py-2">
+                <div class="flex items-center justify-center text-sm lg:text-base">
+                    <p>Total<br> Subjects</p>
+                    <div class="h-16 w-[0.09rem] md:w-0.5 rounded-full ml-3 bg-white"></div>
+                    <i class="fa-solid fa-book text-xl sm:text-2xl lg:text-4xl m-4 p-4 text-[#110042] bg-cyan-400 rounded-full"></i>
+                </div>
+                <p id="subjects_count" class="text-base md:text-lg lg:text-xl font-semibold"></p>
+            </div>
+            <div class="flex items-center justify-center flex-col bg-[#484F6B] m-3 md:m-5 w-48 md:w-52 lg:w-60 rounded-2xl px-3 md:px-5 pr-1 py-2">
+                <div class="flex items-center justify-center text-sm lg:text-base">
+                    <p>Total<br> Credits</p>
+                    <div class="h-16 w-[0.09rem] md:w-0.5 rounded-full ml-3 bg-white"></div>
+                    <i class="fa-solid fa-coins text-xl sm:text-2xl lg:text-4xl m-4 p-4 text-[#110042] bg-cyan-400 rounded-full"></i>
+                </div>
+                <p id="credits" class="text-base md:text-lg lg:text-xl font-semibold"></p>
+            </div>
+        </div>
+        <div class="flex items-center justify-center">
+            <div id="score_overview" class="mx-10 my-5"></div>
+        </div>
     </section>
-    <section id="marks_section" class="pt-10 pb-5 slide-up">
+    <section id="marks_section" class="md:ml-40 pt-10 pb-5 slide-up">
         <div class="text-center font-extrabold text-green-300 my-3 text-2xl sm:text-3xl lg:text-4xl">
             <p>Obtained Marks</p>
         </div>
@@ -63,7 +118,7 @@
             <div id="total_points_section"></div>
         </div>
     </section>
-    <section id="analytics_section" class="pt-10 pb-5 slide-up">
+    <section id="analytics_section" class="md:ml-40 pt-10 pb-5 slide-up">
         <div class="text-center font-extrabold text-green-300 my-3 text-2xl sm:text-3xl lg:text-4xl">
             <p>Marks Analytics</p>
         </div>
@@ -73,7 +128,7 @@
             </div>
         </div>
     </section>
-    <section id="addmarks" class="py-10 slide-up">
+    <section id="addmarks" class="md:ml-40 py-10 slide-up">
         <div class="text-center font-extrabold text-green-300 my-3 text-2xl sm:text-3xl lg:text-4xl">
             <p>New Entry</p>
         </div>
@@ -106,6 +161,9 @@
             </form>
         </div>
     </section>
+    <div>
+        <img src="/src/SRMS-icon.webp" class="h-8 bottom-5 left-5 rounded-full sm:hidden block fixed" alt="icon">
+    </div>
 </body>
 <script src="script.js "></script>
 <script src="firebase.js"></script>
