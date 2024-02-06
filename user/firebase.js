@@ -181,6 +181,7 @@ name_ref.on('value',function(data)
                     //checking whether the user have any records or not
                     if (semesters.length !=0)//if the semesters count not equal to zero
                     {
+                        var points_to_grade={10:"A+",9:"A",8:"B",7:"C",6:"D",5:"E",4:"F"};
                         //creating loop to iterate each semester of the
                         for(var i=0;i<semesters.length;i++)
                         {
@@ -205,13 +206,12 @@ name_ref.on('value',function(data)
 
                             //adding number of subjects each time to the semester_subject_count -- counting the total number of subjects in all semester
                             semester_subject_count=Number(semester_subject_count)+Number(subject_count)-1;
-                            SGP_and_creditCount=marks_field(subject_count,Info,indvd_sem,main_div,"subjects_bargraph_"+i,semister_title);//function that reutrns all the individual subject grades, credits and subject name
+                            SGP_and_creditCount=marks_field(subject_count,Info,indvd_sem,main_div,"subjects_bargraph_"+i,semister_title,points_to_grade);//function that reutrns all the individual subject grades, credits and subject name
                             //adding the total credits in each semester
                             credits_count=Number(credits_count)+Number(SGP_and_creditCount.credits_count);
                             //calculating Total GPA
                             CGP=Number(CGP)+Number(SGP_and_creditCount.total_points);
                             sem_GPA.push(SGP_and_creditCount.total_points);
-                            console.log(sem_GPA,sem_names)
                             //appending the total table section into the marks_section div
                             marks_section.appendChild(main_div);
                         }
@@ -241,6 +241,7 @@ name_ref.on('value',function(data)
                             title:semister_title,
                             barmode: 'stack',
                             bargap: 0.05,
+                            margin: {l: 70, r: 40, t: 50, b: 100},
                             xaxis:{title:"Semesters",borderRadius: 100},
                             yaxis:{title:"Scores",range:[0,10],borderRadius: 100},
                             paper_bgcolor: '#323955', // set paper background color
@@ -270,7 +271,7 @@ name_ref.on('value',function(data)
     }
 })
 //creating a function that analyse all the subject names, credit points, grades, bargraphs individually...
-function marks_field(subject_count,Info,indvd_sem,main_div,subject_bargraph,semister_title)
+function marks_field(subject_count,Info,indvd_sem,main_div,subject_bargraph,semister_title,points_to_grade)
 {
     var TCGP=0;
     var credit_count=0;
@@ -302,7 +303,6 @@ function marks_field(subject_count,Info,indvd_sem,main_div,subject_bargraph,semi
 
         //adding the row to the table
         table.appendChild(tr);
-
     //creating loop to get each subject, grade, credits
     for(var j=1;j<Number(subject_count);j++)
     {
@@ -333,7 +333,7 @@ function marks_field(subject_count,Info,indvd_sem,main_div,subject_bargraph,semi
         subjects_array.push(Info[indvd_sem]["subject"+j].subject);
 
         const grade_value=document.createElement("td");
-        grade_value.innerText=Info[indvd_sem]["subject"+j].grade;
+        grade_value.innerText=points_to_grade[Info[indvd_sem]["subject"+j].grade];
         grades_array.push(Info[indvd_sem]["subject"+j].grade);
 
         const credit_value=document.createElement("td");
@@ -377,6 +377,7 @@ function marks_field(subject_count,Info,indvd_sem,main_div,subject_bargraph,semi
         title:semister_title,
         barmode: 'stack',
         bargap: 0.05,
+        margin: {l: 70, r: 40, t: 50, b: 100},
         xaxis:{title:"Semester Sujects",borderRadius: 100},
         yaxis:{title:"Grades Scored",range:[0,10],borderRadius: 100},
         paper_bgcolor: '#323955', // set paper background color

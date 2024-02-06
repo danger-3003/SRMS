@@ -23,3 +23,8 @@ bars_button.addEventListener("click",()=>
         menu.classList.replace("left-0","-left-40");
     }
 })
+document.getElementById("logout").addEventListener("click",()=>
+{
+    localStorage.setItem('user-name',null);
+    localStorage.setItem('user-email',null);
+})
