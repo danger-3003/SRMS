@@ -87,7 +87,7 @@ function addfield()
 
         const grade_field=document.createElement('select');
         grade_field.classList="bg-[#323955] border-b-[1px] px-2 py-1 text-white outline-none rounded-sm mx-2 my-1";
-        grade_field.name='Grade';
+        grade_field.placeholder='Grade';
         grade_field.required=true;
         grade_field.id=grade;
 

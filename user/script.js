@@ -22,6 +22,7 @@ bars_button.addEventListener("click",()=>
         bars_button.classList.replace("fa-times","fa-bars");
         menu.classList.replace("left-0","-left-40");
     }
+    bars_button.classList.toggle("ml-[6.5rem]");
 })
 document.getElementById("logout").addEventListener("click",()=>
 {

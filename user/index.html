@@ -18,16 +18,17 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-[#272E4B] text-white" style="font-family: Poppins;">
-    <header id="toggle_menu" class="h-full bg-[#484F6B] fixed flex justify-center z-[4] shadow-2xl px-20 w-36 -left-40 md:left-0 transition-all duration-500" style="font-family: Varela Round;">
+    <header id="toggle_menu" class="h-full bg-[#484F6B] fixed flex justify-center z-[4] shadow-2xl px-20 w-40 -left-40 md:left-0 transition-all duration-500" style="font-family: Varela Round;">
         <nav class="mt-10">
-            <div class="flex flex-col items-center justify-center h-12 mt-32">
-                <img src="/src/profile.jpg" class="rounded-full mt-5 h-20 sm:h-auto">
-                <a href="#profile_section" class="px-1 py-0.5 my-2 mt-10">Profile</a>
-                <a href="#marks_section" class="px-1 py-0.5 my-2">Marks</a>
-                <a href="#analytics_section" class="px-1 py-0.5 my-2">Analytics</a>
+            <div class="flex flex-col items-center justify-center h-12 mt-36">
+                <img src="/src/profile.jpg" class="rounded-full mt-5 h-14 sm:h-auto">
+                <p id="name" class="w-[8rem] text-center my-2 text-[#4cccff] font-bold"></p>
+                <a href="#profile_section" class="px-1 py-0.5 my-2 mt-10 font-medium w-max"><i class="fa-regular fa-user mr-2"></i>Profile</a>
+                <a href="#marks_section" class="px-1 py-0.5 my-2 font-medium w-max"><i class="fa-regular fa-window-restore mr-2"></i>Marks</a>
+                <a href="#analytics_section" class="px-1 py-0.5 my-2 font-medium w-max"><i class="fa-solid fa-chart-simple mr-2"></i>Analytics</a>
             </div>
         </nav>
-        <a href="/" id="logout" class="px-1 py-0.5 text-base my-2 absolute bottom-5">Logout</a>
+        <a href="/" id="logout" class="px-1 py-0.5 text-base my-2 absolute bottom-5 text-[#ff8d8d]"><i class="fa-solid fa-right-from-bracket mr-2"></i>Logout</a>
         <div class="fixed bottom-5 right-5">
             <a href=""><i class="fa-solid fa-circle-question text-3xl md:text-4xl absolute z-[1]"></i></a>
             <i class="fa-solid fa-circle-question text-3xl md:text-4xl animate-ping"></i>
@@ -81,7 +82,7 @@
                 <div class="flex items-center justify-center text-sm lg:text-base">
                     <p>Total<br> Sem's</p>
                     <div class="h-16 w-[0.09rem] md:w-0.5 rounded-full ml-3 bg-white"></div>
-                    <i class="fa-solid fa-paste text-xl sm:text-2xl lg:text-4xl m-4 p-4 text-[#110042] bg-cyan-400 rounded-full"></i>
+                    <i class="fa-solid fa-paste text-xl sm:text-2xl lg:text-4xl m-4 p-4 text-[#110042] bg-gradient-to-r from-cyan-300 to-blue-500 rounded-full"></i>
                 </div>
                 <p id="semester_count" class="text-base md:text-lg lg:text-xl font-semibold"></p>
             </div>
@@ -89,7 +90,7 @@
                 <div class="flex items-center justify-center text-sm lg:text-base">
                     <p>Total<br> Subjects</p>
                     <div class="h-16 w-[0.09rem] md:w-0.5 rounded-full ml-3 bg-white"></div>
-                    <i class="fa-solid fa-book text-xl sm:text-2xl lg:text-4xl m-4 p-4 text-[#110042] bg-cyan-400 rounded-full"></i>
+                    <i class="fa-solid fa-book text-xl sm:text-2xl lg:text-4xl m-4 p-4 text-[#110042] bg-gradient-to-r from-cyan-300 to-blue-500 rounded-full"></i>
                 </div>
                 <p id="subjects_count" class="text-base md:text-lg lg:text-xl font-semibold"></p>
             </div>
@@ -97,7 +98,7 @@
                 <div class="flex items-center justify-center text-sm lg:text-base">
                     <p>Total<br> Credits</p>
                     <div class="h-16 w-[0.09rem] md:w-0.5 rounded-full ml-3 bg-white"></div>
-                    <i class="fa-solid fa-coins text-xl sm:text-2xl lg:text-4xl m-4 p-4 text-[#110042] bg-cyan-400 rounded-full"></i>
+                    <i class="fa-solid fa-coins text-xl sm:text-2xl lg:text-4xl m-4 p-4 text-[#110042] bg-gradient-to-r from-cyan-300 to-blue-500 rounded-full"></i>
                 </div>
                 <p id="credits" class="text-base md:text-lg lg:text-xl font-semibold"></p>
             </div>
@@ -107,7 +108,7 @@
         </div>
     </section>
     <section id="marks_section" class="md:ml-40 pt-10 pb-5 slide-up">
-        <div class="text-center font-extrabold text-green-300 my-3 text-2xl sm:text-3xl lg:text-4xl">
+        <div class="text-center font-extrabold bg-gradient-to-tr bg-clip-text text-transparent from-[#0bbaff] to-[#26f1ff] my-3 text-2xl sm:text-3xl lg:text-4xl">
             <p>Obtained Marks</p>
         </div>
         <div class="flex items-center flex-col">
@@ -119,7 +120,7 @@
         </div>
     </section>
     <section id="analytics_section" class="md:ml-40 pt-10 pb-5 slide-up">
-        <div class="text-center font-extrabold text-green-300 my-3 text-2xl sm:text-3xl lg:text-4xl">
+        <div class="text-center font-extrabold bg-gradient-to-tr bg-clip-text text-transparent from-[#0bbaff] to-[#26f1ff] my-3 text-2xl sm:text-3xl lg:text-4xl">
             <p>Marks Analytics</p>
         </div>
         <div id="user_graphs_section" class="flex flex-wrap items-center justify-center">
@@ -129,7 +130,7 @@
         </div>
     </section>
     <section id="addmarks" class="md:ml-40 py-10 slide-up">
-        <div class="text-center font-extrabold text-green-300 my-3 text-2xl sm:text-3xl lg:text-4xl">
+        <div class="text-center font-extrabold bg-gradient-to-tr bg-clip-text text-transparent from-[#0bbaff] to-[#26f1ff] my-3 text-2xl sm:text-3xl lg:text-4xl">
             <p>New Entry</p>
         </div>
         <div class="flex items-center justify-center flex-col">
