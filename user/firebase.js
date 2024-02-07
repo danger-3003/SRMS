@@ -285,7 +285,7 @@ name_ref.on('value',function(data)
                           
                           var line_layout = {
                             title:'Performance Overview',
-                            margin: {l: 70, r:100, t: 50, b: 70},
+                            margin: {l: 70, r:70, t: 50, b: 70},
                             xaxis:{title:"Semesters"},
                             yaxis: {title: 'Scores',range:[0,10]},
                             yaxis2: {
@@ -299,6 +299,7 @@ name_ref.on('value',function(data)
                                 },
                             paper_bgcolor: '#323955', // set paper background color
                             plot_bgcolor: '#323955',
+                            showlegend:false
                           };
                           
                           Plotly.newPlot('performance_overview', line_data, line_layout,{displayModeBar: false});
