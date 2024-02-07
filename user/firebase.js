@@ -175,8 +175,11 @@ name_ref.on('value',function(data)
                     var bargraph_maindiv=document.getElementById("user_graphs_section");
                     var semester_subject_count=0;
                     var credits_count=0;
-                    var sem_GPA=[];//for graph in profile section
+
+                    //for graphs in profile section
+                    var sem_GPA=[];
                     var sem_names=[];
+                    var sem_percent=[];
 
                     //checking whether the user have any records or not
                     if (semesters.length !=0)//if the semesters count not equal to zero
@@ -201,7 +204,7 @@ name_ref.on('value',function(data)
                             subject_bargraph.classList="mx-10 my-5";
                             bargraph_maindiv.appendChild(subject_bargraph);//adding individual semister bargraph into bargraph div
 
-                            var semister_title="Semester "+Info[indvd_sem].semister;//creating semester title for the bargraph and passed into the marks_field() function
+                            var semister_title="Sem "+Info[indvd_sem].semister;//creating semester title for the bargraph and passed into the marks_field() function
                             sem_names.push(semister_title);
 
                             //adding number of subjects each time to the semester_subject_count -- counting the total number of subjects in all semester
@@ -212,6 +215,8 @@ name_ref.on('value',function(data)
                             //calculating Total GPA
                             CGP=Number(CGP)+Number(SGP_and_creditCount.total_points);
                             sem_GPA.push(SGP_and_creditCount.total_points);
+                            sem_percent.push((Number(SGP_and_creditCount.total_points)-0.7)*10);
+
                             //appending the total table section into the marks_section div
                             marks_section.appendChild(main_div);
                         }
@@ -223,7 +228,7 @@ name_ref.on('value',function(data)
 
                         document.getElementById("total_points_section").appendChild(total_points);//adding total_points paragraph to total points section
                     
-                        //graphs in profile section..
+                        //bar graphs in profile section..
                         const data = [{
                                 x:sem_names,
                                 y:sem_GPA,
@@ -238,20 +243,65 @@ name_ref.on('value',function(data)
                             }];
                         
                         const layout = {
-                            title:semister_title,
+                            title:'Score Overview',
                             barmode: 'stack',
                             bargap: 0.05,
-                            margin: {l: 70, r: 40, t: 50, b: 100},
-                            xaxis:{title:"Semesters",borderRadius: 100},
-                            yaxis:{title:"Scores",range:[0,10],borderRadius: 100},
+                            margin: {l: 50, r: 10, t: 50, b: 100},
+                            xaxis:{title:"Semesters"},
+                            yaxis:{title:"Scores",range:[0,10]},
                             paper_bgcolor: '#323955', // set paper background color
                             plot_bgcolor: '#323955',
-                            borderRadius: 100,
                             font: {
                                 color: 'white' // set font color
                             }
                         };
                         Plotly.newPlot(score_overview, data, layout,{displayModeBar: false});
+
+                        //line graph in profile section
+                        var trace1 = {
+                            x: sem_names,
+                            y: sem_GPA,
+                            name: 'GPA',
+                            type: 'scatter',
+                            line: {
+                                color: 'rgb(49,230,241)',
+                                width: 3
+                            }
+                          };
+                          
+                          var trace2 = {
+                            x: sem_names,
+                            y: sem_percent,
+                            name: 'Percent',
+                            yaxis: 'y2',
+                            type: 'scatter',
+                            line: {
+                                color: 'rgb(49,230,0)',
+                                width: 3
+                            }
+                          };
+                          
+                          var line_data = [trace1, trace2];
+                          
+                          var line_layout = {
+                            title:'Performance Overview',
+                            margin: {l: 70, r:100, t: 50, b: 70},
+                            xaxis:{title:"Semesters"},
+                            yaxis: {title: 'Scores',range:[0,10]},
+                            yaxis2: {
+                              title: 'Performance',
+                              overlaying: 'y',
+                              side: 'right',
+                              range:[0,100]
+                            },
+                            font: {
+                                    color: 'white' // set font color
+                                },
+                            paper_bgcolor: '#323955', // set paper background color
+                            plot_bgcolor: '#323955',
+                          };
+                          
+                          Plotly.newPlot('performance_overview', line_data, line_layout,{displayModeBar: false});
                     }
                     else
                     {
@@ -378,8 +428,8 @@ function marks_field(subject_count,Info,indvd_sem,main_div,subject_bargraph,semi
         barmode: 'stack',
         bargap: 0.05,
         margin: {l: 70, r: 40, t: 50, b: 100},
-        xaxis:{title:"Semester Sujects",borderRadius: 100},
-        yaxis:{title:"Grades Scored",range:[0,10],borderRadius: 100},
+        xaxis:{title:"Semester Sujects"},
+        yaxis:{title:"Grades Scored",range:[0,10]},
         paper_bgcolor: '#323955', // set paper background color
         plot_bgcolor: '#323955',
         borderRadius: 100,

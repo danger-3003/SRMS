@@ -84,6 +84,8 @@ login.addEventListener("submit",(e)=>
             else
             {
                 swal("Invalid credetials","","error");
+                localStorage.setItem('user-name',name);
+                localStorage.setItem('user-email',email);
                 login.reset();
             }
         }
