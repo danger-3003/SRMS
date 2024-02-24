@@ -14,6 +14,14 @@ firebase.initializeApp(firebaseConfig);
 //getting name from the h1 tag, later to be grab from local storage...
 var name=document.getElementById('name').innerText;
 
+//creating a database instance and accessing the registration number of student
+var redg_no_ref=firebase.database().ref("Info/"+name+"/redg");
+redg_no_ref.on('value',function(data)
+{
+    var redg_no=data.val();
+    document.getElementById('redg_no').innerText=redg_no;
+})
+    
 //adding submit event listeners to the form
 document.getElementById('submit').addEventListener('submit',(e)=>
 {

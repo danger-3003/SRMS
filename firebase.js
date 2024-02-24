@@ -23,15 +23,14 @@ signup.addEventListener('submit',(e)=>
     var name=document.getElementById('sname').value;
     var email=document.getElementById('semail').value;
     var pass=document.getElementById('spassword').value;
-    //accessing value from radio buttons
-    var gender=document.querySelector('input[name="gender"]:checked').value;
+    var redg=document.getElementById("redg").value;
     //creating reference for the person details
     var details = firebase.database().ref("Info").child(name);
     //passing values to database 
     var ref=firebase.database().ref("Info");
     ref.on("value",function(data)
     {
-        //accessing values inside "Info/<name>" object
+        // accessing values inside "Info/<name>" object
         var Info=data.val();
         var keys=Object.keys(Info);
         if(keys.includes(name))
@@ -46,7 +45,7 @@ signup.addEventListener('submit',(e)=>
                 name: name,
                 email: email,
                 password: pass,
-                gender:gender,
+                redg:redg,
                 });
             //resetting the form after submitting
             swal("Registered successfully...","","success");
