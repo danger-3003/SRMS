@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,72 +8,226 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nosifer&display=swap" rel="stylesheet">
+    <style>
+        @media screen and (max-width:375px)
+        {
+            #heading-375
+            {
+                font-size: 2rem;
+            }
+        }
+        @media screen and (max-width:500px)
+        {
+            #width-70vw
+            {
+                width: 80vw;
+            }
+        }
+        .shadow-box-right
+        {
+            box-shadow: 2px 0px 10px rgba(77, 77, 77, 0.445);
+        }
+        .shadow-box-left
+        {
+            box-shadow: -2px 0px 10px rgba(77, 77, 77, 0.445);
+        }
+        .animation
+        {
+            animation: spin 5s linear infinite;
+        }
+        .animation_1
+        {
+            animation: spin 10s linear infinite;
+        }
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
 </head>
-<body style="background-image: url(src/Untitled.svg);">
-    <div class="overflow-hidden flex items-center justify-start flex-col p-5 sm:p-8 pt-5 w-[85vw] sm:w-[25rem] h-[29rem] sm:h-[32.2rem] md:h-[32.5rem] bg-white shadow-2xl text-black mx-auto my-14 rounded-md" style="backdrop-filter: blur(8px);">
-        <div>
-            <img src="src/SRMS-icon.webp" class="h-20 w-20 mb-3 sm:mb-5 rounded-full" alt="icon">
-        </div>
-        <div class="mb-3">
-            <h1 class="font-bold text-[1.3rem] sm:text-3xl">Welcome to SRMS!</h1>
-        </div>
-        <div class="relative w-full">
-            <form class="w-full absolute right-[0%] transition-all duration-300" id="Login">
-                <div>
-                    <div class="flex flex-col my-2">
-                        <label for="name" class="text-sm sm:text-base">Name <span class="text-[gray]">(Firstname+Surname)</span></label>
-                        <input type="text" name="" id="lname" required placeholder="Your name (Eg: Virat Kohli)" class="text-sm sm:text-base text-[gray] px-2 py-0.5 sm:px-3 sm:py-1 border rounded outline-blue-800" style="border: 1px solid rgb(179, 176, 176);">
-                    </div>
-                    <div class="flex flex-col my-2">
-                        <label for="email" class="text-sm sm:text-base">Email</label>
-                        <input type="email" name="" id="lemail" required placeholder="abc@gmail.com" class="text-[gray] px-2 py-0.5 sm:px-3 sm:py-1 border rounded outline-blue-800" style="border: 1px solid rgb(179, 176, 176);">
-                    </div>
-                    <div class="flex flex-col my-2">
-                        <label for="password" class="text-sm sm:text-base">Password</label>
-                        <input type="password" name="" id="lpassword" required placeholder="Your password" class="text-sm sm:text-base text-[gray] px-2 py-0.5 sm:px-3 sm:py-1 border rounded outline-blue-800" style="border: 1px solid rgb(179, 176, 176);">
-                        <div class="flex items-center justify-end">
-                            <input type="checkbox" class="m-0.5" name="" id="show" onclick="lclicked()"><p class="text-sm text-gray-800">show password</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="flex items-center justify-end text-[0.8rem] sm:text-sm text-[gray]">
-                    <p>Didn't have an account? <a class="text-[blue] text-[0.65rem] hover:cursor-pointer" id="tosignuppage">SIGN UP</a> </p>
-                </div>
-                <div class="mt-7">
-                    <button class="scale-90 sm:scale-100 bg-[#0000ff] hover:bg-[#3434ff] text-yellow-300 rounded-full text-sm font-bold px-10 py-2 transition-all duration-200 hover:cursor-pointer" id="login" style="box-shadow: rgba(1, 1, 48, 0.685) 0px 1px 5px 1px;">Login</button>
-                </div>
-            </form>
-            <form class="w-full absolute left-[130%] -top-[1rem] transition-all duration-300" id="Signup">
-                <div>
-                    <div class="flex flex-col my-2">
-                        <label for="name" class="text-sm sm:text-base">Name <span class="text-[gray]">(Firstname+Surname)</span></label>
-                        <input type="text" name="" id="sname" placeholder="Your name (Eg: Virat Kohli)" required class="text-sm sm:text-base text-[gray] px-2 py-0.5 sm:px-3 sm:py-1 border rounded outline-blue-800" style="border: 1px solid rgb(179, 176, 176);">
-                    </div>
-                    <div class="flex flex-col my-2">
-                        <label for="email" class="text-sm sm:text-base">Email</label>
-                        <input type="email" name="" id="semail" placeholder="abc@gmail.com" required class="text-[gray] px-2 py-0.5 sm:px-3 sm:py-1 border rounded outline-blue-800" style="border: 1px solid rgb(179, 176, 176);">
-                    </div>
-                    <div class="flex flex-col my-2">
-                        <label for="password" class="text-sm sm:text-base">Password</label>
-                        <input type="password" name="" id="spassword" placeholder="Your password" required class="text-sm sm:text-base text-[gray] px-2 py-0.5 sm:px-3 sm:py-1 border rounded outline-blue-800" style="border: 1px solid rgb(179, 176, 176);">
-                        <div class="flex items-center justify-end">
-                            <input type="checkbox" class="m-0.5" name="" id="show" onclick="sclicked()"><p class="text-sm text-gray-800">show password</p>
-                        </div>
-                    </div>
-                    <div>
-                        <label for="redg" class="mr-3">Redg. No</label>
-                        <input type="text" name="redg" id="redg" placeholder="Redg. No" class="text-sm sm:text-base text-[gray] px-2 py-0.5 sm:px-3 sm:py-1 border rounded outline-blue-800" style="border: 1px solid rgb(179, 176, 176);" required>
-                    </div>
-                </div>
-                <div class="flex items-center justify-end text-[0.8rem] sm:text-sm text-[gray]">
-                    <p>Already have an account? <a class="text-[blue] text-[0.65rem] hover:cursor-pointer" id="tologinpage">LOGIN</a> </p>
-                </div>
-                <div class="mt-7">
-                    <button class="scale-90 sm:scale-100 bg-[#0000ff] hover:bg-[#3434ff] text-yellow-300 rounded-full text-sm font-bold px-10 py-2 transition-all duration-200 hover:cursor-pointer" id="signup" style="box-shadow: rgba(1, 1, 48, 0.685) 0px 1px 5px 1px;">Sign Up</button>
-                </div>
-            </form>
-        </div>
+<body>
+    <header class="fixed z-20 top-0 bg-[#aad7ffcb] h-12 w-full" style="backdrop-filter: blur(10px);box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.247);font-family: poppins;">
+        <nav class="">
+            <div class="flex items-center justify-center gap-10 h-12 font-semibold">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#try_now">Try now</a>
+            </div>
+        </nav>
+    </header>
+    <div class="fixed z-20 bottom-3 left-3 sm:top-2 sm:left-5">
+        <img src="src/logo.svg" alt="logo" class="h-8 w-8">
     </div>
+    <section id="home" class="relative flex items-center justify-center bg-gradient-to-tr from-[#02021b] to-blue-900 h-max lg:h-screen w-full py-32 md:py-40 lg:py-10 text-white" style="font-family: poppins;">
+        <div class="text-center">
+            <p class="font-bold md:font-extrabold text-2xl sm:text-3xl md:text-4xl lg:text-5xl mx-5 md:mx-10 z-10 relative">Revolutionizing Student Result Management System</p>
+            <p class="font-medium text-[#63B5FF] text-xl sm:text-2xl md:text-3xl mt-4 mb-2 sm:my-4 mx-5 z-10 relative">Introducing Our New WebApp</p>
+            <p class="font-medium text-lg sm:text-xl md:text-2xl sm:mt-7 md:mt-10 mb-5 mx-10 z-10 relative">Are you tired of the hassle of managing student results manually?</p>
+            <a href="#try_now" class="relative z-10 px-5 py-1 overflow-hidden font-bold text-blue-900 bg-cyan-100 border border-cyan-100 rounded-full shadow-inner group">
+                <span class="absolute top-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-cyan-600 rounded-full group-hover:h-full ease"></span>
+                <span class="absolute bottom-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-cyan-600 rounded-full group-hover:h-full ease"></span>
+                <span class="absolute inset-0 w-full h-full duration-300 delay-300 bg-cyan-500 opacity-0 rounded-full group-hover:opacity-100"></span>
+                <span class="relative transition-colors duration-300 delay-200 group-hover:text-white group-hover:font-semibold ease">free to try</span>
+            </a>
+        </div>
+        <img src="src/decor_1.svg" class="absolute h-8 top-48 left-[5vw] md:left-[10vw] rotate-[-45deg] z-0 animate-pulse" alt="decor_1" style="filter:drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.274))">
+        <img src="src/decor_2.svg" class="absolute h-20 sm:h-32 top-40 right-[5vw] md:right-[10vw] z-0 animation_1" alt="decor_2" style="filter:drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.274))">
+        <img src="src/decor_3.svg" class="absolute h-20 top-96 left-[50vw]" alt="decor_3" style="filter:drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.274))">
+    </section>
+    <section id="about" class="relative flex items-center justify-center flex-col bg-white h-max w-full py-10 md:py-16 lg:py-10 text-[#0a0a3d]" style="font-family: poppins;">
+        <p class="relative z-10 font-bold md:font-extrabold text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center mx-5 md:mx-10 my-10">Why Choose Our WebApp ?</p>
+        <div class="relative flex flex-wrap items-center justify-center z-10">
+            <div class="border border-slate-900 rounded-xl w-[80vw] sm:w-64 m-5 p-4 flex items-center justify-center flex-col">
+                <div>
+                    <img src="src/efficiency.svg" class="h-20 mb-2" alt="efficiency">
+                </div>
+                <p class="uppercase font-bold">efficiency</p>
+                <p class="text-center">Save time and resources by automating tedious administrative tasks</p>
+            </div>
+            <div class="border border-slate-900 rounded-xl w-[80vw] sm:w-64 m-5 p-4 flex items-center justify-center flex-col">
+                <div>
+                    <img src="src/accuracy.svg" class="h-20 mb-2" alt="accuracy">
+                </div>
+                <p class="uppercase font-bold">accuracy</p>
+                <p class="text-center"> Minimize errors and ensure data integrity with our reliable platform.</p>
+            </div>
+            <div class="border border-slate-900 rounded-xl w-[80vw] sm:w-64 m-5 p-4 flex items-center justify-center flex-col">
+                <div>
+                    <img src="src/accesiibility.svg" class="h-20 mb-2" alt="accesiibility">
+                </div>
+                <p class="uppercase font-bold">accesiibility</p>
+                <p class="text-center">Access your student data anytime, anywhere, with our cloud-based solution.</p>
+            </div>
+        </div>
+        <div class="relative w-full sm:w-[90vw] md:w-[85vw] lg:w-[70vw] z-10">
+            <p class="font-medium mx-5 md:mx-10 my-5 text-center">
+                Say goodbye to piles of paperwork and endless data entry with our revolutionary Student Result Management System WebApp! <span class="hidden sm:block">Designed with both educators and administrators in mind, our intuitive platform streamlines the entire process, making it easier than ever to track, analyze, and communicate student progress.</span>
+            </p>
+        </div>
+        <div class="relative flex items-center justify-center flex-col md:flex-row md:mx-16 z-10">
+            <div>
+                <img src="src/data_visual.svg" class="h-60 md:h-80 md:w-80 lg:h-96 lg:w-96" alt="process" style="filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.411));">
+            </div>
+            <div class="md:basis-[70%] lg:basis-[60%]">
+                <div>
+                    <p class="font-bold md:font-extrabold text-2xl sm:text-3xl md:text-4xl mx-8 text-center md:text-left md:ml-5">A smooth journey from DATA to VISUALS</p>
+                </div>
+                <div>
+                    <p class="font-medium mx-5 md:ml-5 my-5 text-center md:text-left">Our Student Result Management System WebApp efficiently processes data into actionable insights, ensuring accuracy and security from collection to visualization.</p>
+                </div>
+            </div>
+        </div>
+        <img src="src/decor_1.svg" class="absolute h-8 sm:h-16 top-48 right-[5vw] md:right-[10vw] rotate-[45deg] z-0 animate-pulse" alt="decor_1" style="filter:drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.274))">
+        <img src="src/decor_2.svg" class="absolute h-20 top-80 sm:top-40 left-[5vw] md:left-[10vw] animation_1 z-0" alt="decor_2" style="filter:drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.274))">
+        <img src="src/decor_4.svg" class="absolute h-12 md:h-28 top-[90%] md:-top-10 right-[20vw] md:left-[20vw] rotate-[45deg]" alt="decor_4" style="filter:drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.274))">
+        <img src="src/decor_5.svg" class="absolute h-28 top-[27rem] sm:top-[25rem] right-[10vw] sm:right-[40vw]" alt="" style="filter:drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.274))">
+        <img src="src/decor_3.svg" class="absolute h-32 top-[55%] left-[20vw] animate-pulse" alt="">
+    </section>
+    <section id="try_now" class="mx-auto bg-[#d9e6ff] h-screen w-full relative z-10 flex items-center justify-center">
+        <div class="flex items-center justify-center h-[30rem] w-screen sm:w-[50rem] mx-auto overflow-hidden">
+            <div class="relative w-full h-[30rem]">
+                <div class="absolute top-[45%] -left-2 sm:left-5 z-10">
+                    <div class="relative mx-auto h-10 w-10 animate-bounce">
+                        <div class="mx-auto h-16 w-16 animate-pulse rounded-full bg-gray-400"></div>
+                        <span class="absolute flex h-5 w-5 animate-spin">
+                            <span class="h-4 w-4 rounded-full bg-gray-400"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="absolute top-[5%] right-0 sm:right-14 z-10">
+                    <div class="relative mx-auto h-10 w-10">
+                        <div class="mx-auto h-20 w-20 animate-pulse rounded-full bg-blue-300" style="filter: blur(5px);"></div>
+                        <span class="absolute flex h-5 w-5 spin">
+                            <span class="h-4 w-4 rounded-full bg-yellow-400" style="filter: blur(5px);"></span>
+                        </span>
+                    </div>
+                </div>
+                <div id="sign_up_block" class="flex items-center justify-center flex-row-reverse w-full h-[30rem] right-[0%] transition-all duration-500 absolute">
+                    <div id="width-70vw" class="shadow-box-right h-full sm:m-0 p-5 sm:p-10 bg-[#5A77DF] rounded-ss-3xl sm:rounded-ss-none w-[60vw] sm:w-auto rounded-ee-3xl sm:rounded-r-3xl">
+                        <h2 class="font-bold text-4xl text-[#110042] text-center" id="heading-375">Signup</h2>
+                        <p class="font-light text-base sm:text-lg mt-2 text-white text-center">Enter your details to create your account</p>
+                        <form action="" class="flex flex-col gap-4" id="Signup">
+                            <input class="px-3 py-1 text-sm mt-8 rounded-full border outline-none" required type="text" name="suser" id="sname" placeholder="Username">
+                            <input class="px-3 py-1 text-sm rounded-full border outline-none" required type="text" name="srnumber" id="redg" placeholder="Registration num">
+                            <input class="px-3 py-1 text-sm rounded-full border outline-none" required type="email" name="semail" id="semail" placeholder="Email">
+                            <input class="px-3 py-1 text-sm rounded-full border outline-none" required type="password" name="spass" id="spassword" placeholder="Password">
+                            <div class="flex items-center justify-end">
+                                <input type="checkbox" class="mx-2" name="show" id="show" onclick="sclicked()">
+                                <p class="text-sm text-white">Show password</p>
+                            </div>
+                            <div class="flex items-center justify-start ml-2 text-[0.8rem] sm:text-[1rem] text-white">
+                                <p class="text-center font-bold">Already have an account? <a class="text-[#FFE500] text-[0.65rem] hover:cursor-pointer" id="tologin">LOGIN</a></p>
+                            </div>
+                            <div class="mt-2">
+                                <button id="signup" type="submit" class="relative inline-flex items-center px-10 py-1.5 rounded-full overflow-hidden text-lg font-medium text-white group bg-[#110042]">
+                                    <span class="absolute left-0 block w-full h-0 transition-all bg-gradient-to-tr from-indigo-900 via-blue-900 to-indigo-900 opacity-100 group-hover:h-full top-1/2 group-hover:top-0 duration-400 ease"></span>
+                                    <span class="absolute right-0 flex items-center justify-start w-10 h-10 duration-300 transform translate-x-full group-hover:translate-x-0 ease">
+                                    <svg class="w-4 h-4 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                    </span>
+                                    <span class="relative text-sm font-bold hover:-ml-3 duration-300 transition-all">SIGN UP</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="h-full hidden sm:block">
+                        <img class="h-full rounded-l-3xl shadow-box-left" src="src/signup.jpg" alt="">
+                    </div>
+                </div>
+                <div id="login_block" class="flex items-center justify-center w-full h-[30rem] absolute left-[100%] transition-all duration-500">
+                    <div id="width-70vw" class="shadow-box-left h-full sm:m-0 p-5 sm:p-10 bg-[#5A77DF] w-[60vw] sm:w-auto rounded-se-3xl sm:rounded-se-none rounded-es-3xl sm:rounded-l-3xl">
+                        <h2 class="font-bold text-4xl text-[#110042] mt-10 text-center" id="heading-375">Login</h2>
+                        <p class="font-light text-base sm:text-lg mt-2 text-white text-center">Enter your account details</p>
+                        <form action="" class="flex flex-col gap-4" id="Login">
+                            <input class="px-3 py-1 mt-8 rounded-full outline-none" required type="text" name="luser" id="lname" placeholder="Username">
+                            <input class="px-3 py-1 text-sm rounded-full border outline-none" required type="email" name="email" id="lemail" placeholder="Email">
+                            <input class="px-3 py-1 rounded-full outline-none" required type="password" name="lpass" id="lpassword" placeholder="Password">
+                            <div class="flex items-center justify-end">
+                                <input type="checkbox" class="mx-2" name="show" id="show" onclick="lclicked()">
+                                <p class="text-sm text-white">Show password</p>
+                            </div>
+                            <div class="flex items-center justify-center text-[0.8rem] sm:text-[1rem] text-white">
+                                <p class="text-center font-bold">Didn't have an account? <a class="text-[#FFE500] text-[0.65rem] hover:cursor-pointer" id="tosignup">SIGN UP</a></p>
+                            </div>
+                            <div class="mt-2">
+                                <button id="login" type="submit" class="relative inline-flex items-center px-10 py-1.5 rounded-full overflow-hidden text-lg font-medium text-white group bg-[#110042]">
+                                    <span class="absolute left-0 block w-full h-0 transition-all bg-gradient-to-tr from-indigo-900 via-blue-900 to-indigo-900 opacity-100 group-hover:h-full top-1/2 group-hover:top-0 duration-400 ease"></span>
+                                    <span class="absolute right-0 flex items-center justify-start w-10 h-10 duration-300 transform translate-x-full group-hover:translate-x-0 ease">
+                                    <svg class="w-4 h-4 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                    </span>
+                                    <span class="relative text-sm font-bold hover:-ml-3 duration-300 transition-all">LOGIN</span>
+                                </button>
+                            </div>
+                        </form> 
+                    </div>
+                    <div class="h-full hidden sm:block">
+                        <img class="rounded-r-3xl h-full shadow-box-right" src="src/login.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <img src="src/decor_6.svg" class="absolute z-[12] h-14 sm:h-20 top-0 sm:top-[10%] left-[5%] sm:left-[20%] animation" alt="decor_6">
+    </section>
+    <footer class="h-max sm:h-20 w-full px-10 py-3 sm:py-0 bg-[#02021b] flex items-center justify-center sm:justify-between flex-col sm:flex-row">
+        <p style="font-family: Nosifer;" class="text-yellow-400 text-3xl">S<span class="text-green-400">R</span><span class="text-orange-500">M</span><span class="text-[white]">S</span></p>
+        <nav class="">
+            <div class="flex items-center justify-center gap-5 md:gap-10 sm:-ml-14 h-12 font-semibold text-white">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#try_now">Try now</a>
+            </div>
+        </nav>
+        <div class="hidden sm:block">
+            <img src="src/logo.svg" alt="logo" class="h-10 w-10">
+        </div>
+    </footer>
 </body>
 <script>
     function lclicked()
