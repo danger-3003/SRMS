@@ -74,7 +74,7 @@ login.addEventListener("submit",(e)=>
             var user_pass=Info[k].password;
             if(user_name==name & user_pass==pass)
             {
-                swal("Login success...","","success");
+              
                 localStorage.setItem('user-name',name);
                 localStorage.setItem('user-email',email);
                 window.location.assign("user/");
