@@ -58,7 +58,6 @@ login.addEventListener("submit",(e)=>
 {
     e.preventDefault();
     var name=document.getElementById("lname").value;
-    var pass=document.getElementById("lpassword").value;
     var email=document.getElementById("lemail").value;
     //creating reference for data inside "Info" object
     var ref=firebase.database().ref("Info");
@@ -67,26 +66,20 @@ login.addEventListener("submit",(e)=>
         //accessing values inside "Info/<name>" object
         var Info=data.val();
         var keys=Object.keys(Info);
-        for(var i=0;i<keys.length;i++)
+        if(keys.includes(name))
         {
-            var k = keys[i];
-            var user_name=Info[k].name;
-            var user_pass=Info[k].password;
-            if(user_name==name & user_pass==pass)
-            {
-              
-                localStorage.setItem('user-name',name);
-                localStorage.setItem('user-email',email);
-                window.location.assign("user/");
-                login.reset();
-            }
-            else
-            {
-                swal("Invalid credetials","","error");
-                localStorage.setItem('user-name',name);
-                localStorage.setItem('user-email',email);
-                login.reset();
-            }
+            swal("Login success...","","success");
+            localStorage.setItem('user-name',name);
+            localStorage.setItem('user-email',email);
+            window.location.assign("user/");
+            login.reset();
+        }
+        else
+        {
+            swal("Invalid credetials","","error");
+            localStorage.setItem('user-name',name);
+            localStorage.setItem('user-email',email);
+            login.reset();
         }
     })
 })
