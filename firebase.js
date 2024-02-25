@@ -72,7 +72,7 @@ login.addEventListener("submit",(e)=>
             var k = keys[i];
             var user_name=Info[k].name;
             var user_pass=Info[k].password;
-            if(user_name===name & user_pass===pass)
+            if(user_name==name & user_pass==pass)
             {
                 swal("Login success...","","success");
                 localStorage.setItem('user-name',name);
