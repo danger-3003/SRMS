@@ -27,6 +27,7 @@
                 <a href="#profile_section" class="px-1 py-0.5 my-2 mt-10 font-medium w-max"><i class="fa-regular fa-user mr-2"></i>Profile</a>
                 <a href="#marks_section" class="px-1 py-0.5 my-2 font-medium w-max"><i class="fa-regular fa-window-restore mr-2"></i>Marks</a>
                 <a href="#analytics_section" class="px-1 py-0.5 my-2 font-medium w-max"><i class="fa-solid fa-chart-simple mr-2"></i>Analytics</a>
+                <a href="#addmarks" class="px-1 py-0.5 my-2 font-medium w-max"><i class="fa-solid fa-user-plus mr-2"></i>Add Marks</a>
             </div>
         </nav>
         <a href="/" id="logout" class="px-1 py-0.5 text-base my-2 absolute bottom-5 text-[#ff8d8d]"><i class="fa-solid fa-right-from-bracket mr-2"></i>Logout</a>
@@ -39,14 +40,17 @@
         <i class="fa-solid fa-bars block md:hidden transition-all duration-500" id="bars"></i>
         <!-- toggle icon -->
     </div>
-    <div class="md:pl-40 w-full text-center font-semibold text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl bg-[#272e4bd0] fixed z-[3]" style="backdrop-filter: blur(5px);">
+    <div class="md:pl-40 w-full text-center font-semibold text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl bg-[#272e4bb4] fixed z-[3]" style="backdrop-filter: blur(5px);">
         <p class="my-2">Student Result<br class="block sm:hidden"> Managment System</p>
         <div>
             <img src="/src/SRMS-icon.webp" class="h-8 sm:top-1 lg:top-2 xl:top-2.5 sm:right-5 rounded-full hidden sm:block sm:absolute" alt="icon">
         </div>
         <!-- SRMS icon -->
     </div>
-    <section id="profile_section" class="md:ml-40 h-max pt-28 pb-5 lg:py-32 slide-up">
+    <section>
+        <marquee id="no_records" scrollamount="12" direction="right" class="mt-16 bg-[#ffffff21] fixed h-10 flex items-center w-screen z-[3] text-red-400 font-extrabold" style="backdrop-filter: blur(10px);"></marquee>
+    </section>
+    <section id="profile_section" class="md:ml-40 h-max pt-28 pb-5 lg:py-28 slide-up">
         <div class="flex items-center justify-center flex-col sm:flex-row mx-10">
             <div class="bg-[#5A77DF] h-max w-[90vw] md:w-[38rem] sm:p-7 rounded-3xl relative flex">
                 <div class="w-[90vw] sm:w-max relative z-[1] bg-[#5a77df3f] p-3 rounded-lg" style="backdrop-filter: blur(5px);">
@@ -115,7 +119,7 @@
         </div>
         <div class="flex items-center flex-col">
             <div>
-                <p id="no_record" class="text-[#ff5b5b] text-center"></p>
+                <p id="no_marks" class="text-[#ff5b5b] text-center"></p>
             </div>
             <div id="marks"></div>
             <div id="total_points_section"></div>

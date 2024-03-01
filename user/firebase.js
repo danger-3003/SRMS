@@ -160,11 +160,14 @@ name_ref.on('value',function(data)
 {
     var names=data.val();
     var users=Object.keys(names);
-    if(names[name]==undefined)
+    console.log(names[name])
+    if(names[name]===undefined)
     {
-        var noRecord=document.getElementById("no_record");
+        var noRecords=document.getElementById("no_records");
+        var noMarks=document.getElementById("no_marks");
         var noAnalytics=document.getElementById("no_analytics");
-        noRecord.innerText="No reocrds found...";
+        noRecords.innerText="No Records Found!";
+        noMarks.innerText="You didn't enter any Marks...";
         noAnalytics.innerText="No reocrds found, please add Marks to activate Analytics...";
     }
     for(var i=0;i<users.length;i++)
