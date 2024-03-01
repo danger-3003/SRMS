@@ -166,6 +166,7 @@ name_ref.on('value',function(data)
         var noRecords=document.getElementById("no_records");
         var noMarks=document.getElementById("no_marks");
         var noAnalytics=document.getElementById("no_analytics");
+        noRecords.classList.replace("h-0","h-10")
         noRecords.innerText="No Records Found!";
         noMarks.innerText="You didn't enter any Marks...";
         noAnalytics.innerText="No reocrds found, please add Marks to activate Analytics...";
