@@ -232,6 +232,19 @@ name_ref.on('value',function(data)
                             //appending the total table section into the marks_section div
                             marks_section.appendChild(main_div);
                         }
+                        
+                        //checking the status - PASS/FAIL
+                        var status=document.getElementById("status");
+                        if(SGP_and_creditCount.status==0)
+                        {
+                            status.innerText="Pass";
+                            status.classList.add("text-green-400");
+                        }
+                        else if(SGP_and_creditCount.status==1)
+                        {
+                            status.innerText="Fail";
+                            status.classList.add("text-red-400");
+                        }
                         const total_points=document.createElement('p');//creating paragraph for total GPS outside loop to overcome multiple iterations
                         total_points.innerText="Total Grade Points (CGP) - "+((Number(CGP)/Number(semesters.length)).toFixed(2));
                         total_points.classList="font-bold text-center text-xl text-yellow-200";
@@ -343,6 +356,8 @@ function marks_field(subject_count,Info,indvd_sem,main_div,subject_bargraph,semi
     //creating arrays for plotting graph
     var subjects_array=[];
     var grades_array=[];
+
+    var status=0;
     
     // creating a table to store marks in an organised way
     const table=document.createElement("table");
@@ -417,6 +432,7 @@ function marks_field(subject_count,Info,indvd_sem,main_div,subject_bargraph,semi
         if (Info[indvd_sem]["subject"+j].grade<5)//skipping the credit value if he/she fails a subject -- F=5
         {
             credit_count=Number(credit_count)+0;
+            status=1;
         }
         else//adding the credit value if he/she pass
         {
@@ -459,5 +475,5 @@ function marks_field(subject_count,Info,indvd_sem,main_div,subject_bargraph,semi
 
     //calculating total grade points
     TCGP=(Number(nume)/Number(denum)).toFixed(2);//toFixed() used to show 2 decimal points
-    return {total_points:TCGP,credits_count:credit_count};
+    return {total_points:TCGP,credits_count:credit_count,status:status};
 }
