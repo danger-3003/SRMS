@@ -146,7 +146,7 @@ else
             grade_field.appendChild(opt6);
 
             var opt7 = document.createElement('option');
-            opt7.value = 4;
+            opt7.value = 0;
             opt7.text = 'F';
             grade_field.appendChild(opt7);
 
@@ -166,7 +166,6 @@ else
     {
         var names=data.val();
         var users=Object.keys(names);
-        console.log(names[name])
         if(names[name]===undefined)
         {
             var noRecords=document.getElementById("no_records");
@@ -198,11 +197,12 @@ else
                         var sem_GPA=[];
                         var sem_names=[];
                         var sem_percent=[];
+                        var status=[];
 
                         //checking whether the user have any records or not
                         if (semesters.length !=0)//if the semesters count not equal to zero
                         {
-                            var points_to_grade={10:"A+",9:"A",8:"B",7:"C",6:"D",5:"E",4:"F"};
+                            var points_to_grade={10:"A+",9:"A",8:"B",7:"C",6:"D",5:"E",0:"F"};
                             //creating loop to iterate each semester of the
                             for(var i=0;i<semesters.length;i++)
                             {
@@ -213,7 +213,7 @@ else
                                 main_div.classList="flex items-center justify-center flex-col p-5";
 
                                 const sem_value=document.createElement('p');//creating paragraph tag to display semister value
-                                sem_value.innerText="Semister - "+Info[indvd_sem].semister;//keeping semister value as paragraph inner text
+                                sem_value.innerText="Semester - "+Info[indvd_sem].semister;//keeping semister value as paragraph inner text
                                 sem_value.classList="p-2 font-semibold text-lg"
                                 main_div.appendChild(sem_value);//adding semister valued paragraph inside main div
 
@@ -227,7 +227,7 @@ else
 
                                 //adding number of subjects each time to the semester_subject_count -- counting the total number of subjects in all semester
                                 semester_subject_count=Number(semester_subject_count)+Number(subject_count)-1;
-                                SGP_and_creditCount=marks_field(subject_count,Info,indvd_sem,main_div,"subjects_bargraph_"+i,semister_title,points_to_grade);//function that reutrns all the individual subject grades, credits and subject name
+                                SGP_and_creditCount=marks_field(subject_count,Info,indvd_sem,main_div,"subjects_bargraph_"+i,semister_title,points_to_grade,status);//function that reutrns all the individual subject grades, credits and subject name
                                 //adding the total credits in each semester
                                 credits_count=Number(credits_count)+Number(SGP_and_creditCount.credits_count);
                                 //calculating Total GPA
@@ -240,16 +240,18 @@ else
                             }
                             
                             //checking the status - PASS/FAIL
-                            var status=document.getElementById("status");
-                            if(SGP_and_creditCount.status==0)
+                            var status_curr=document.getElementById("status");
+                            console.log(status);
+
+                            if(status.includes("0"))
                             {
-                                status.innerText="Pass";
-                                status.classList.add("text-green-400");
+                                status_curr.innerText="Fail";
+                                status_curr.classList.add("text-red-400");
                             }
-                            else if(SGP_and_creditCount.status==1)
+                            else
                             {
-                                status.innerText="Fail";
-                                status.classList.add("text-red-400");
+                                status_curr.innerText="Pass";
+                                status_curr.classList.add("text-green-400");
                             }
                             const total_points=document.createElement('p');//creating paragraph for total GPS outside loop to overcome multiple iterations
                             total_points.innerText="Total Grade Points (CGP) - "+((Number(CGP)/Number(semesters.length)).toFixed(2));
@@ -344,16 +346,16 @@ else
                         document.getElementById("credits").innerText=credits_count;//displaying the total credits in the profile section
                         //displaying the total CGPA and total percentage in profile secion
                         document.getElementById("CGPA").innerText=(Number(CGP)/Number(semesters.length)).toFixed(2);
-                        document.getElementById("percentage").innerText=((Number(CGP)/Number(semesters.length)).toFixed(2)-0.7).toFixed(2)*10+"%";
+                        document.getElementById("percentage").innerText=(((Number(CGP)/Number(semesters.length)).toFixed(2)-0.7))*10+"%";
                     })
                 }
                 else throw "user not found"
             }
             catch(e){}
         }
-    })
+    }) 
     //creating a function that analyse all the subject names, credit points, grades, bargraphs individually...
-    function marks_field(subject_count,Info,indvd_sem,main_div,subject_bargraph,semister_title,points_to_grade)
+    function marks_field(subject_count,Info,indvd_sem,main_div,subject_bargraph,semister_title,points_to_grade,status)
     {
         var TCGP=0;
         var credit_count=0;
@@ -362,9 +364,8 @@ else
         //creating arrays for plotting graph
         var subjects_array=[];
         var grades_array=[];
+    
 
-        var status=0;
-        
         // creating a table to store marks in an organised way
         const table=document.createElement("table");
             table.classList="border border-slate-500 rounded overflow-hidden border-collapse";
@@ -438,12 +439,12 @@ else
             if (Info[indvd_sem]["subject"+j].grade<5)//skipping the credit value if he/she fails a subject -- F=5
             {
                 credit_count=Number(credit_count)+0;
-                status=1;
             }
             else//adding the credit value if he/she pass
             {
                 credit_count=Number(credit_count)+Number(Info[indvd_sem]["subject"+j].credits);
             }
+            status.push(Info[indvd_sem]["subject"+j].grade);
         }
         const data = [{
         x:subjects_array,
@@ -481,6 +482,6 @@ else
 
         //calculating total grade points
         TCGP=(Number(nume)/Number(denum)).toFixed(2);//toFixed() used to show 2 decimal points
-        return {total_points:TCGP,credits_count:credit_count,status:status};
+        return {total_points:TCGP,credits_count:credit_count};
     }
 }
