@@ -3,12 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SRMS - Student Result Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>SRMS - Student Result Managment System</title>
+    <style>
+        @keyframes ping {
+            0%, 100% {
+                rotate: -30deg;
+            }
+            50%
+            {
+                rotate: 0deg;
+            }
+        }
+        .animate-shake {
+            animation: ping 0.2s cubic-bezier(0, 0, 0.2, 1) infinite;
+        }
+    </style>
 </head>
-<body>
-    <div class="flex items-center justify-center">
-        <p>Sorry :(, Session Expired</p>
-        <a href="../index.html">Login Here</a>
+<body class="bg-gradient-to-tr from-[#02021b] to-blue-900 h-screen pt-20">
+    <div class="flex items-center justify-center flex-col p-5 md:p-10 bg-white w-[80vw] sm:w-max mx-auto rounded-lg">
+        <img src="/src/expired.png" class="animate-shake fa-solid fa-clock-rotate-left text-[10vw] w-[50%] md:w-[60%]" style="filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.377));">
+        <p class="text-[red] text-xl sm:text-2xl md:text-3xl font-bold pb-4 text-center">Your session has Expired <i class="fa-regular fa-face-frown"></i></p>
+        <p class="text-gray-700 font-medium text-center">Don't worry, we kept all of your data.</p>
+        <p class="text-gray-700 font-medium text-center">Please <a href="/index.html" class="text-blue-600 font-bold">Login</a> again</p>
+    </div>
+    <div>
+        <a href="/index.html"><img src="/src/SRMS-icon.webp" class="h-8 bottom-8 sm:right-8 rounded-full hidden sm:block sm:absolute" alt="icon"></a>
     </div>
 </body>
 </html>

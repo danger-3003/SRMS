@@ -59,6 +59,8 @@ login.addEventListener("submit",(e)=>
     e.preventDefault();
     var name=document.getElementById("lname").value;
     var email=document.getElementById("lemail").value;
+    var pass=document.getElementById("lpassword").value;
+
     //creating reference for data inside "Info" object
     var ref=firebase.database().ref("Info");
     ref.on("value",function(data)
@@ -66,7 +68,7 @@ login.addEventListener("submit",(e)=>
         //accessing values inside "Info/<name>" object
         var Info=data.val();
         var keys=Object.keys(Info);
-        if(keys.includes(name))
+        if(keys.includes(name) && Info[name]["password"]==pass)
         {
             swal("Login success...","","success");
             localStorage.setItem('user-name',name);

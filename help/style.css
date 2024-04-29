@@ -1,0 +1,11 @@
+ul li .content{
+    max-height: 0;
+    padding: 0rem 1rem 0rem 1rem;
+}
+li input[type="radio"]:checked + label + .content{
+    max-height: 600px;
+    padding: 1rem;
+}
+li input[type="radio"]:checked ~ label .plus{
+    transform: rotate(135deg);
+} 
